@@ -25,6 +25,15 @@ const loading = ref(false)
 const loadingData = ref(true)
 const error = ref('')
 const citasDelDia = ref<Cita[]>([])
+const submitted = ref(false)
+
+const formValid = computed(() =>
+  form.value.idMascota !== 0 &&
+  form.value.idServicio !== 0 &&
+  form.value.fechaCita !== '' &&
+  form.value.horaCita !== '' &&
+  form.value.motivo.trim() !== ''
+)
 
 const mascotaOptions = computed(() =>
   mascotas.value.filter(m => m.estado === true).map(m => ({
@@ -160,7 +169,9 @@ onMounted(async () => {
 })
 
 async function handleSubmit() {
-  if (!form.value.idMascota || !form.value.idServicio || !form.value.fechaCita || !form.value.horaCita || !form.value.motivo) {
+  submitted.value = true
+
+  if (!formValid.value) {
     return
   }
 
@@ -229,6 +240,9 @@ async function handleSubmit() {
                 placeholder="Seleccionar mascota..."
                 :required="true"
               />
+              <label v-if="submitted && !form.idMascota" class="label py-0">
+                <span class="label-text-alt text-error text-xs">Debes seleccionar una mascota</span>
+              </label>
             </div>
           </div>
 
@@ -246,6 +260,9 @@ async function handleSubmit() {
                 placeholder="Buscar servicio..."
                 :required="true"
               />
+              <label v-if="submitted && !form.idServicio" class="label py-0">
+                <span class="label-text-alt text-error text-xs">Debes seleccionar un servicio</span>
+              </label>
             </div>
             <div v-if="servicioSeleccionado" class="bg-base-200/50 rounded-lg p-3">
               <div class="flex items-center justify-between text-sm">
@@ -273,6 +290,9 @@ async function handleSubmit() {
                   :min-date="minDate"
                 />
               </div>
+              <label v-if="submitted && !form.fechaCita" class="label py-0">
+                <span class="label-text-alt text-error text-xs">Debes seleccionar una fecha</span>
+              </label>
             </div>
 
             <div class="form-control">
@@ -285,7 +305,6 @@ async function handleSubmit() {
                 v-model="form.horaCita"
                 class="select select-bordered select-sm w-full"
                 :disabled="!form.fechaCita || horasDisponibles.length === 0"
-                required
               >
                 <option value="" disabled>
                   {{ !form.fechaCita ? 'Selecciona una fecha primero' : horasDisponibles.length === 0 ? 'No hay horas disponibles' : 'Seleccionar hora' }}
@@ -294,6 +313,9 @@ async function handleSubmit() {
                   {{ formatHora(hora) }}
                 </option>
               </select>
+              <label v-if="submitted && !form.horaCita" class="label py-0">
+                <span class="label-text-alt text-error text-xs">Debes seleccionar una hora</span>
+              </label>
             </div>
 
             <p v-if="form.horaCita && servicioSeleccionado" class="text-xs text-base-content/50">
@@ -308,14 +330,17 @@ async function handleSubmit() {
               Motivo de la consulta
             </h4>
             <div class="form-control">
-              <textarea v-model="form.motivo" class="textarea textarea-bordered textarea-sm w-full" rows="2" required placeholder="Describe el motivo de la visita..."></textarea>
+              <textarea v-model="form.motivo" class="textarea textarea-bordered textarea-sm w-full" rows="2" placeholder="Describe el motivo de la visita..."></textarea>
+              <label v-if="submitted && !form.motivo.trim()" class="label py-0">
+                <span class="label-text-alt text-error text-xs">Debes escribir el motivo de la consulta</span>
+              </label>
             </div>
           </div>
 
           <!-- Acciones -->
           <div class="flex justify-end gap-3 pt-2">
             <button type="button" class="btn btn-ghost" @click="router.back()">Cancelar</button>
-            <button type="submit" class="btn btn-primary gap-2" :disabled="loading || !form.idMascota || !form.idServicio || !form.fechaCita || !form.horaCita || !form.motivo">
+            <button type="submit" class="btn btn-primary gap-2" :disabled="loading">
               <span v-if="loading" class="loading loading-spinner loading-sm"></span>
               <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
               Agendar Cita

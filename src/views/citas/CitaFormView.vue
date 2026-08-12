@@ -34,6 +34,16 @@ const loading = ref(false)
 const error = ref('')
 const citasDelDia = ref<Cita[]>([])
 const inicializando = ref(false)
+const submitted = ref(false)
+
+const formValid = computed(() =>
+  form.value.idMascota !== 0 &&
+  form.value.idServicio !== 0 &&
+  form.value.idEmpleado !== 0 &&
+  form.value.fechaCita !== '' &&
+  form.value.horaCita !== '' &&
+  form.value.motivo.trim() !== ''
+)
 
 const mascotaOptions = computed(() =>
   mascotas.value.filter(m => m.estado === true).map(m => ({
@@ -232,14 +242,14 @@ onMounted(async () => {
 })
 
 async function handleSubmit() {
-  loading.value = true
-  error.value = ''
+  submitted.value = true
 
-  if (!form.value.horaCita) {
-    error.value = 'Selecciona una hora disponible'
-    loading.value = false
+  if (!formValid.value) {
     return
   }
+
+  loading.value = true
+  error.value = ''
 
   try {
     if (isEdit) {
@@ -287,6 +297,9 @@ async function handleSubmit() {
             placeholder="Buscar mascota por nombre o dueño..."
             :required="true"
           />
+          <label v-if="submitted && !form.idMascota" class="label py-0">
+            <span class="label-text-alt text-error text-xs">Debes seleccionar una mascota</span>
+          </label>
         </div>
       </div>
 
@@ -305,6 +318,9 @@ async function handleSubmit() {
               placeholder="Buscar servicio..."
               :required="true"
             />
+            <label v-if="submitted && !form.idServicio" class="label py-0">
+              <span class="label-text-alt text-error text-xs">Debes seleccionar un servicio</span>
+            </label>
           </div>
           <div class="form-control">
             <label class="label py-0">
@@ -318,6 +334,9 @@ async function handleSubmit() {
               :placeholder="`Buscar ${servicioSeleccionado?.tipoServicio === 'ESTETICA' ? 'estilista' : 'veterinario'}...`"
               :required="true"
             />
+            <label v-if="submitted && !form.idEmpleado" class="label py-0">
+              <span class="label-text-alt text-error text-xs">Debes seleccionar un profesional</span>
+            </label>
           </div>
         </div>
         <div v-if="servicioSeleccionado" class="bg-base-200/50 rounded-lg p-3">
@@ -348,6 +367,9 @@ async function handleSubmit() {
               :min-date="minDate"
             />
           </div>
+          <label v-if="submitted && !form.fechaCita" class="label py-0">
+            <span class="label-text-alt text-error text-xs">Debes seleccionar una fecha</span>
+          </label>
         </div>
 
         <!-- Hora -->
@@ -361,7 +383,6 @@ async function handleSubmit() {
             v-model="form.horaCita"
             class="select select-bordered select-sm w-full"
             :disabled="!form.fechaCita || horasDisponibles.length === 0"
-            required
           >
             <option value="" disabled>
               {{ !form.fechaCita ? 'Selecciona una fecha primero' : horasDisponibles.length === 0 ? 'No hay horas disponibles' : 'Seleccionar hora' }}
@@ -370,6 +391,9 @@ async function handleSubmit() {
               {{ formatHora(hora) }}
             </option>
           </select>
+          <label v-if="submitted && !form.horaCita" class="label py-0">
+            <span class="label-text-alt text-error text-xs">Debes seleccionar una hora</span>
+          </label>
         </div>
 
         <p v-if="form.horaCita && servicioSeleccionado" class="text-xs text-base-content/50">
@@ -385,7 +409,10 @@ async function handleSubmit() {
         </h4>
         <div class="form-control">
           <label class="label py-0"><span class="label-text font-medium text-sm">Motivo *</span></label>
-          <textarea v-model="form.motivo" class="textarea textarea-bordered textarea-sm w-full" rows="2" required placeholder="Motivo de la consulta..."></textarea>
+          <textarea v-model="form.motivo" class="textarea textarea-bordered textarea-sm w-full" rows="2" placeholder="Motivo de la consulta..."></textarea>
+          <label v-if="submitted && !form.motivo.trim()" class="label py-0">
+            <span class="label-text-alt text-error text-xs">Debes escribir el motivo de la consulta</span>
+          </label>
         </div>
         <div class="form-control">
           <label class="label py-0"><span class="label-text font-medium text-sm">Observaciones</span></label>
@@ -396,7 +423,7 @@ async function handleSubmit() {
       <!-- Acciones -->
       <div class="flex justify-end gap-3 pt-2">
         <button type="button" class="btn btn-ghost" @click="router.back()">Cancelar</button>
-        <button type="submit" class="btn btn-primary gap-2" :disabled="loading || !form.idMascota || !form.idServicio || !form.idEmpleado || !form.fechaCita || !form.horaCita || !form.motivo">
+        <button type="submit" class="btn btn-primary gap-2" :disabled="loading">
           <span v-if="loading" class="loading loading-spinner loading-sm"></span>
           <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
           {{ isEdit ? 'Actualizar' : 'Crear Cita' }}

@@ -30,6 +30,13 @@ const loading = ref(false)
 const error = ref('')
 const mascotasActivasCount = ref(0)
 const limitReached = ref(false)
+const submitted = ref(false)
+
+const formValid = computed(() =>
+  form.value.nombre.trim() !== '' &&
+  form.value.especie !== '' &&
+  form.value.sexo !== ''
+)
 
 const species = ['Perro', 'Gato', 'Ave', 'Reptil', 'Conejo', 'Hamster', 'Otro']
 
@@ -89,6 +96,12 @@ onMounted(async () => {
 })
 
 async function handleSubmit() {
+  submitted.value = true
+
+  if (!formValid.value) {
+    return
+  }
+
   loading.value = true
   error.value = ''
 
@@ -149,15 +162,21 @@ async function handleSubmit() {
         </h4>
         <div class="form-control">
           <label class="label py-0"><span class="label-text font-medium text-sm">Nombre *</span></label>
-          <input v-model="form.nombre" type="text" class="input input-bordered input-sm w-full" required placeholder="Nombre de la mascota" />
+          <input v-model="form.nombre" type="text" class="input input-bordered input-sm w-full" placeholder="Nombre de la mascota" />
+          <label v-if="submitted && !form.nombre.trim()" class="label py-0">
+            <span class="label-text-alt text-error text-xs">Debes ingresar el nombre</span>
+          </label>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Especie *</span></label>
-            <select v-model="form.especie" class="select select-bordered select-sm w-full" required>
+            <select v-model="form.especie" class="select select-bordered select-sm w-full">
               <option value="" disabled>Seleccionar</option>
               <option v-for="s in species" :key="s" :value="s">{{ s }}</option>
             </select>
+            <label v-if="submitted && !form.especie" class="label py-0">
+              <span class="label-text-alt text-error text-xs">Debes seleccionar una especie</span>
+            </label>
           </div>
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Raza</span></label>
@@ -175,7 +194,7 @@ async function handleSubmit() {
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Sexo *</span></label>
-            <select v-model="form.sexo" class="select select-bordered select-sm w-full" required>
+            <select v-model="form.sexo" class="select select-bordered select-sm w-full">
               <option value="MACHO">Macho</option>
               <option value="HEMBRA">Hembra</option>
             </select>
@@ -209,6 +228,9 @@ async function handleSubmit() {
             placeholder="Buscar por nombre o documento..."
             :required="true"
           />
+          <label v-if="submitted && !form.idCliente" class="label py-0">
+            <span class="label-text-alt text-error text-xs">Debes seleccionar un cliente</span>
+          </label>
         </div>
       </div>
 
