@@ -7,6 +7,7 @@ import type { Cita } from '@/types/cita'
 const props = defineProps<{
   modelValue: string
   idEmpleado?: number
+  tipoServicio?: string
   minDate?: string
 }>()
 
@@ -103,6 +104,7 @@ function getDayStatus(day: number): 'free' | 'partial' | 'full' | 'past' {
   for (const cita of citas) {
     if (cita.estadoCita === 'CANCELADA' || cita.estadoCita === 'ATENDIDA') continue
     if (props.idEmpleado && cita.idEmpleado !== props.idEmpleado) continue
+    if (props.tipoServicio && cita.tipoServicio !== props.tipoServicio) continue
     totalOcupado += getDuracionServicio(cita.tipoServicio)
   }
 
@@ -126,6 +128,7 @@ function getCitasDelDia(day: number): Cita[] {
   return todas.filter(c => {
     if (c.estadoCita === 'CANCELADA' || c.estadoCita === 'ATENDIDA') return false
     if (props.idEmpleado && c.idEmpleado !== props.idEmpleado) return false
+    if (props.tipoServicio && c.tipoServicio !== props.tipoServicio) return false
     return true
   })
 }
@@ -141,7 +144,7 @@ function getHorasOcupadas(day: number): string[] {
     const cM = parseInt(parts[1] || '0')
     const cInicio = cH * 60 + cM
     return cInicio >= minutosAhora
-  }).map(c => {
+  }).sort((a, b) => a.horaCita.localeCompare(b.horaCita)).map(c => {
     const duracion = getDuracionServicio(c.tipoServicio)
     const inicio = formatHora(c.horaCita)
     const parts = c.horaCita.split(':')
@@ -151,7 +154,7 @@ function getHorasOcupadas(day: number): string[] {
     const finH = Math.floor(finMinutes / 60)
     const finM = finMinutes % 60
     const finStr = `${String(finH).padStart(2, '0')}:${String(finM).padStart(2, '0')}`
-    return `${inicio} - ${formatHora(finStr)} (${c.nombreServicio} - ${c.nombreEmpleado || 'Sin Asignar'})`
+    return `${inicio} - ${formatHora(finStr)}`
   })
 }
 

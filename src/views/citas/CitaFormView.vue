@@ -23,6 +23,7 @@ const form = ref({
   motivo: '',
   observaciones: '',
   idMascota: 0,
+  tipoServicio: '',
   idEmpleado: 0,
   idServicio: 0,
 })
@@ -38,6 +39,7 @@ const submitted = ref(false)
 
 const formValid = computed(() =>
   form.value.idMascota !== 0 &&
+  form.value.tipoServicio !== '' &&
   form.value.idServicio !== 0 &&
   form.value.idEmpleado !== 0 &&
   form.value.fechaCita !== '' &&
@@ -54,7 +56,7 @@ const mascotaOptions = computed(() =>
 )
 
 const servicioOptions = computed(() =>
-  servicios.value.filter(s => s.estado === true).map(s => ({
+  servicios.value.filter(s => s.estado === true && s.tipoServicio === form.value.tipoServicio).map(s => ({
     value: s.idServicio,
     label: s.nombre,
     sublabel: `$${s.precio.toLocaleString()} - ${s.tipoServicio}`,
@@ -132,6 +134,7 @@ const horasDisponibles = computed(() => {
       const ocupada = citasDelDia.value.some(c => {
         if (c.estadoCita === 'CANCELADA' || c.estadoCita === 'ATENDIDA') return false
         if (isEdit && c.idCita === Number(route.params.id)) return false
+        if (c.tipoServicio !== form.value.tipoServicio) return false
         if (form.value.idEmpleado && c.idEmpleado !== form.value.idEmpleado) return false
         const parts = c.horaCita.split(':')
         const cH = parseInt(parts[0] || '0')
@@ -200,6 +203,13 @@ watch(() => form.value.idServicio, () => {
   form.value.horaCita = ''
 })
 
+watch(() => form.value.tipoServicio, () => {
+  if (inicializando.value) return
+  form.value.idServicio = 0
+  form.value.idEmpleado = 0
+  form.value.horaCita = ''
+})
+
 onMounted(async () => {
   try {
     const calls: Promise<any>[] = [mascotasApi.getAll(), serviciosApi.getAll()]
@@ -229,6 +239,7 @@ onMounted(async () => {
         motivo: cita.motivo,
         observaciones: cita.observaciones || '',
         idMascota: cita.idMascota || 0,
+        tipoServicio: servicios.value.find(s => s.idServicio === cita.idServicio)?.tipoServicio || '',
         idEmpleado: cita.idEmpleado || 0,
         idServicio: cita.idServicio || 0,
       }
@@ -311,11 +322,23 @@ async function handleSubmit() {
         </h4>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="form-control">
+            <label class="label py-0"><span class="label-text font-medium text-sm">Tipo de servicio *</span></label>
+            <select v-model="form.tipoServicio" class="select select-bordered select-sm w-full">
+              <option value="" disabled>Seleccionar tipo</option>
+              <option value="CONSULTA">Consulta</option>
+              <option value="ESTETICA">Estética</option>
+            </select>
+            <label v-if="submitted && !form.tipoServicio" class="label py-0">
+              <span class="label-text-alt text-error text-xs">Debes seleccionar un tipo de servicio</span>
+            </label>
+          </div>
+          <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Servicio *</span></label>
             <SearchSelect
               v-model="form.idServicio"
               :options="servicioOptions"
-              placeholder="Buscar servicio..."
+              :placeholder="form.tipoServicio ? 'Buscar servicio...' : 'Selecciona un tipo primero'"
+              :disabled="!form.tipoServicio"
               :required="true"
             />
             <label v-if="submitted && !form.idServicio" class="label py-0">
@@ -364,6 +387,7 @@ async function handleSubmit() {
             <CalendarDayPicker
               v-model="form.fechaCita"
               :id-empleado="form.idEmpleado || undefined"
+              :tipo-servicio="form.tipoServicio || undefined"
               :min-date="minDate"
             />
           </div>
