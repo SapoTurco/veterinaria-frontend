@@ -12,11 +12,14 @@ const showDeleteDialog = ref(false)
 const selected = ref<Rol | null>(null)
 const editMode = ref(false)
 const showInactive = ref(false)
+const submitted = ref(false)
 
 const form = ref({
   nombre: '',
   descripcion: '',
 })
+
+const formValid = computed(() => form.value.nombre.trim() !== '')
 
 const columns = [
   { key: 'idRol', label: 'ID', sortable: true },
@@ -50,6 +53,7 @@ async function loadData() {
 watch(showInactive, loadData)
 
 function openForm(rol?: Rol) {
+  submitted.value = false
   if (rol) {
     editMode.value = true
     selected.value = rol
@@ -63,6 +67,12 @@ function openForm(rol?: Rol) {
 }
 
 async function handleSubmit() {
+  submitted.value = true
+
+  if (!formValid.value) {
+    return
+  }
+
   try {
     if (editMode.value && selected.value) {
       await adminApi.updateRol(selected.value.idRol, form.value)
@@ -172,7 +182,10 @@ onMounted(loadData)
             </h4>
             <div class="form-control">
               <label class="label py-0"><span class="label-text font-medium text-sm">Nombre *</span></label>
-              <input v-model="form.nombre" type="text" class="input input-bordered input-sm w-full" required placeholder="Ej: ADMIN, VETERINARIO..." />
+              <input v-model="form.nombre" type="text" class="input input-bordered input-sm w-full" placeholder="Ej: ADMIN, VETERINARIO..." />
+              <label v-if="submitted && !form.nombre.trim()" class="label py-0">
+                <span class="label-text-alt text-error text-xs">Debes ingresar el nombre del rol</span>
+              </label>
             </div>
             <div class="form-control">
               <label class="label py-0"><span class="label-text font-medium text-sm">Descripción</span></label>

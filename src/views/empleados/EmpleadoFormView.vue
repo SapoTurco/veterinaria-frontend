@@ -26,6 +26,19 @@ const form = ref({
 const cargos = ref<any[]>([])
 const loading = ref(false)
 const error = ref('')
+const submitted = ref(false)
+
+const formValid = computed(() =>
+  form.value.numeroDocumento.trim() !== '' &&
+  form.value.primerNombre.trim() !== '' &&
+  form.value.primerApellido.trim() !== '' &&
+  form.value.idCargo !== 0 &&
+  form.value.fechaIngreso !== ''
+)
+
+const credencialesValid = computed(() =>
+  isEdit || (form.value.correo.trim() !== '' && form.value.password.length >= 8)
+)
 
 const nombreUsuarioPreview = computed(() => {
   if (!form.value.correo) return ''
@@ -61,6 +74,12 @@ onMounted(async () => {
 })
 
 async function handleSubmit() {
+  submitted.value = true
+
+  if (!formValid.value || !credencialesValid.value) {
+    return
+  }
+
   loading.value = true
   error.value = ''
   try {
@@ -123,7 +142,7 @@ async function handleSubmit() {
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Tipo *</span></label>
-            <select v-model="form.tipoDocumento" class="select select-bordered select-sm w-full" required>
+            <select v-model="form.tipoDocumento" class="select select-bordered select-sm w-full">
               <option value="CC">Cedula de Ciudadania</option>
               <option value="CE">Cedula de Extranjeria</option>
               <option value="PASAPORTE">Pasaporte</option>
@@ -131,7 +150,10 @@ async function handleSubmit() {
           </div>
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Numero *</span></label>
-            <input v-model="form.numeroDocumento" type="text" class="input input-bordered input-sm w-full" required placeholder="Numero de documento" />
+            <input v-model="form.numeroDocumento" type="text" class="input input-bordered input-sm w-full" placeholder="Numero de documento" />
+            <label v-if="submitted && !form.numeroDocumento.trim()" class="label py-0">
+              <span class="label-text-alt text-error text-xs">Debes ingresar el numero de documento</span>
+            </label>
           </div>
         </div>
       </div>
@@ -145,7 +167,10 @@ async function handleSubmit() {
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Primer nombre *</span></label>
-            <input v-model="form.primerNombre" type="text" class="input input-bordered input-sm w-full" required placeholder="Primer nombre" />
+            <input v-model="form.primerNombre" type="text" class="input input-bordered input-sm w-full" placeholder="Primer nombre" />
+            <label v-if="submitted && !form.primerNombre.trim()" class="label py-0">
+              <span class="label-text-alt text-error text-xs">Debes ingresar el primer nombre</span>
+            </label>
           </div>
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Segundo nombre</span></label>
@@ -155,7 +180,10 @@ async function handleSubmit() {
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Primer apellido *</span></label>
-            <input v-model="form.primerApellido" type="text" class="input input-bordered input-sm w-full" required placeholder="Primer apellido" />
+            <input v-model="form.primerApellido" type="text" class="input input-bordered input-sm w-full" placeholder="Primer apellido" />
+            <label v-if="submitted && !form.primerApellido.trim()" class="label py-0">
+              <span class="label-text-alt text-error text-xs">Debes ingresar el primer apellido</span>
+            </label>
           </div>
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Segundo apellido</span></label>
@@ -195,14 +223,20 @@ async function handleSubmit() {
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Cargo *</span></label>
-            <select v-model="form.idCargo" class="select select-bordered select-sm w-full" required>
+            <select v-model="form.idCargo" class="select select-bordered select-sm w-full">
               <option :value="0" disabled>Seleccionar cargo</option>
               <option v-for="c in cargos.filter((c: any) => c.estado === true)" :key="c.idCargo" :value="c.idCargo">{{ c.nombre }}</option>
             </select>
+            <label v-if="submitted && !form.idCargo" class="label py-0">
+              <span class="label-text-alt text-error text-xs">Debes seleccionar un cargo</span>
+            </label>
           </div>
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Fecha ingreso *</span></label>
-            <input v-model="form.fechaIngreso" type="date" class="input input-bordered input-sm w-full" required />
+            <input v-model="form.fechaIngreso" type="date" class="input input-bordered input-sm w-full" />
+            <label v-if="submitted && !form.fechaIngreso" class="label py-0">
+              <span class="label-text-alt text-error text-xs">Debes ingresar la fecha de ingreso</span>
+            </label>
           </div>
         </div>
       </div>
@@ -219,18 +253,20 @@ async function handleSubmit() {
         </div>
         <div class="form-control">
           <label class="label py-0"><span class="label-text font-medium text-sm">Contrasena *</span></label>
-          <input v-model="form.password" type="password" class="input input-bordered input-sm w-full" placeholder="Minimo 8 caracteres" minlength="8" required />
+          <input v-model="form.password" type="password" class="input input-bordered input-sm w-full" placeholder="Minimo 8 caracteres" />
+          <label v-if="submitted && !form.correo.trim()" class="label py-0">
+            <span class="label-text-alt text-error text-xs">Debes ingresar un correo electronico</span>
+          </label>
+          <label v-if="submitted && form.password.length < 8" class="label py-0">
+            <span class="label-text-alt text-error text-xs">La contrasena debe tener minimo 8 caracteres</span>
+          </label>
         </div>
       </div>
 
       <!-- Acciones -->
       <div class="flex justify-end gap-3 pt-2">
         <button type="button" class="btn btn-ghost" @click="router.back()">Cancelar</button>
-        <button
-          type="submit"
-          class="btn btn-primary gap-2"
-          :disabled="loading || (!isEdit && (!form.correo || form.password.length < 8 || !form.idCargo || !form.fechaIngreso))"
-        >
+        <button type="submit" class="btn btn-primary gap-2" :disabled="loading">
           <span v-if="loading" class="loading loading-spinner loading-sm"></span>
           <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
           {{ isEdit ? 'Actualizar' : 'Crear Empleado' }}

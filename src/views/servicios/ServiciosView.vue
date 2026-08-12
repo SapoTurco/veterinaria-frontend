@@ -14,6 +14,7 @@ const selectedServicio = ref<Servicio | null>(null)
 const editMode = ref(false)
 const showInactive = ref(false)
 const search = ref('')
+const submitted = ref(false)
 
 const form = ref({
   idServicio: 0,
@@ -22,6 +23,11 @@ const form = ref({
   tipoServicio: 'CONSULTA',
   precio: 0,
 })
+
+const formValid = computed(() =>
+  form.value.nombre.trim() !== '' &&
+  form.value.precio > 0
+)
 
 const columns = [
   { key: 'nombre', label: 'Nombre', sortable: true },
@@ -67,6 +73,7 @@ async function loadData() {
 watch(showInactive, loadData)
 
 function openForm(servicio?: Servicio) {
+  submitted.value = false
   if (servicio) {
     editMode.value = true
     form.value = {
@@ -84,6 +91,12 @@ function openForm(servicio?: Servicio) {
 }
 
 async function handleSubmit() {
+  submitted.value = true
+
+  if (!formValid.value) {
+    return
+  }
+
   try {
     if (editMode.value && form.value.idServicio) {
       await serviciosApi.update(form.value.idServicio, form.value)
@@ -203,7 +216,10 @@ onMounted(loadData)
             </h4>
             <div class="form-control">
               <label class="label py-0"><span class="label-text font-medium text-sm">Nombre *</span></label>
-              <input v-model="form.nombre" type="text" class="input input-bordered input-sm w-full" required placeholder="Nombre del servicio" />
+              <input v-model="form.nombre" type="text" class="input input-bordered input-sm w-full" placeholder="Nombre del servicio" />
+              <label v-if="submitted && !form.nombre.trim()" class="label py-0">
+                <span class="label-text-alt text-error text-xs">Debes ingresar el nombre del servicio</span>
+              </label>
             </div>
             <div class="form-control">
               <label class="label py-0"><span class="label-text font-medium text-sm">Descripción</span></label>
@@ -228,7 +244,10 @@ onMounted(loadData)
               </div>
               <div class="form-control">
                 <label class="label py-0"><span class="label-text font-medium text-sm">Precio ($) *</span></label>
-                <input v-model.number="form.precio" type="number" class="input input-bordered input-sm w-full" min="0" step="100" required />
+                <input v-model.number="form.precio" type="number" class="input input-bordered input-sm w-full" min="0" step="100" />
+                <label v-if="submitted && form.precio <= 0" class="label py-0">
+                  <span class="label-text-alt text-error text-xs">Debes ingresar un precio mayor a 0</span>
+                </label>
               </div>
             </div>
           </div>
