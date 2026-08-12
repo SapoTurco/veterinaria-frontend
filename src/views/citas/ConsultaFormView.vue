@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { citasApi } from '@/api/citasApi'
 import { vincularFacturaDeCita } from '@/utils/facturaCita'
@@ -21,9 +21,28 @@ const form = ref({
   observaciones: '',
 })
 
+const pesoError = computed(() => {
+  const peso = form.value.peso
+  if (peso === null) return ''
+  return Number.isFinite(peso) && peso >= 0.01 && peso <= 500
+    ? ''
+    : 'El peso debe estar entre 0.01 y 500 kg'
+})
+
+const temperaturaError = computed(() => {
+  const temperatura = form.value.temperatura
+  if (temperatura === null) return ''
+  return Number.isFinite(temperatura) && temperatura >= 30 && temperatura <= 45
+    ? ''
+    : 'La temperatura debe estar entre 30 y 45 °C'
+})
+
 async function handleSubmit() {
   if (!form.value.síntomas.trim()) {
     error.value = 'Los síntomas son obligatorios'
+    return
+  }
+  if (pesoError.value || temperaturaError.value) {
     return
   }
   loading.value = true
@@ -80,11 +99,17 @@ async function handleSubmit() {
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Peso (kg)</span></label>
-            <input type="number" v-model.number="form.peso" class="input input-bordered input-sm w-full" step="0.1" min="0" placeholder="Ej: 5.2" />
+            <input type="number" v-model.number="form.peso" class="input input-bordered input-sm w-full" step="0.01" min="0.01" max="500" placeholder="Ej: 5.2" />
+            <label v-if="pesoError" class="label py-0">
+              <span class="label-text-alt text-error text-xs">{{ pesoError }}</span>
+            </label>
           </div>
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Temperatura (C)</span></label>
-            <input type="number" v-model.number="form.temperatura" class="input input-bordered input-sm w-full" step="0.1" min="0" placeholder="Ej: 38.5" />
+            <input type="number" v-model.number="form.temperatura" class="input input-bordered input-sm w-full" step="0.1" min="30" max="45" placeholder="Ej: 38.5" />
+            <label v-if="temperaturaError" class="label py-0">
+              <span class="label-text-alt text-error text-xs">{{ temperaturaError }}</span>
+            </label>
           </div>
         </div>
       </div>
