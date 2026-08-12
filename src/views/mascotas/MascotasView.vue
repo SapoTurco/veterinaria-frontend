@@ -29,9 +29,7 @@ const columns = [
 
 const filteredData = computed(() => {
   let result = allData.value
-  if (!showInactive.value) {
-    result = result.filter(m => m.estado)
-  }
+  result = result.filter(m => showInactive.value ? !m.estado : m.estado)
   if (search.value) {
     const q = search.value.toLowerCase()
     result = result.filter(m =>

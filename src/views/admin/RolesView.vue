@@ -29,9 +29,7 @@ const columns = [
 
 const visibleData = computed(() => {
   let result = [...data.value]
-  if (!showInactive.value) {
-    result = result.filter(r => r.estado)
-  }
+  result = result.filter(r => showInactive.value ? !r.estado : r.estado)
   return result.sort((a, b) => {
     if (a.estado !== b.estado) return a.estado ? -1 : 1
     return (a.idRol - b.idRol)

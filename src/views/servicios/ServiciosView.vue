@@ -39,9 +39,7 @@ const columns = [
 
 const visibleData = computed(() => {
   let result = [...data.value]
-  if (!showInactive.value) {
-    result = result.filter(s => s.estado)
-  }
+  result = result.filter(s => showInactive.value ? !s.estado : s.estado)
   if (search.value) {
     const q = search.value.toLowerCase()
     result = result.filter(s =>

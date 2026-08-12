@@ -35,9 +35,7 @@ function nombreCompleto(cliente: Cliente): string {
 
 const filteredData = computed(() => {
   let result = allData.value
-  if (!showInactive.value) {
-    result = result.filter(c => c.estado)
-  }
+  result = result.filter(c => showInactive.value ? !c.estado : c.estado)
   if (search.value) {
     const q = search.value.toLowerCase()
     result = result.filter(c =>
