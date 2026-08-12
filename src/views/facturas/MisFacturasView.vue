@@ -22,6 +22,10 @@ const pagoForm = ref({
   referenciaPago: '',
 })
 
+function esPagoConTarjeta(metodo: any): boolean {
+  return ['TARJETA_DEBITO', 'TARJETA_CREDITO'].includes(metodo.nombre)
+}
+
 const metodoPagoLabel = computed(() => {
   const m = metodosPago.value.find((x: any) => x.idMetodoPago === pagoForm.value.idMetodoPago)
   return m ? (m.descripcion || m.nombre) : 'Seleccionar método de pago'
@@ -84,7 +88,7 @@ async function openPayModal(factura: Factura) {
   if (metodosPago.value.length === 0) {
     try {
       const res = await metodosPagoApi.getAll()
-      metodosPago.value = (res.data || []).filter((m: any) => m.estado === true)
+      metodosPago.value = (res.data || []).filter((m: any) => m.estado === true && esPagoConTarjeta(m))
     } catch (e) {
       console.error('Error loading metodos de pago', e)
     }
