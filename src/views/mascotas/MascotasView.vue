@@ -138,6 +138,7 @@ onMounted(loadData)
           :data="data"
           :loading="loading"
           emptyMessage="No se encontraron mascotas"
+          dimInactive
         >
           <template #cell-nombre="{ item }">
             <span :class="{ 'opacity-50 line-through': !item.estado }">

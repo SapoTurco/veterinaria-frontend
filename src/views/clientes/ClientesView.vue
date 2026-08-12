@@ -143,6 +143,7 @@ onMounted(loadData)
           :data="data"
           :loading="loading"
           emptyMessage="No se encontraron clientes"
+          dimInactive
           @sort="handleSort"
         >
           <template #cell-primerNombre="{ item }">

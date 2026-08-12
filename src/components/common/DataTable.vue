@@ -6,6 +6,7 @@ const props = defineProps<{
   data: T[]
   loading?: boolean
   emptyMessage?: string
+  dimInactive?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -14,6 +15,10 @@ const emit = defineEmits<{
 
 function getNestedValue(obj: any, path: string): any {
   return path.split('.').reduce((acc, part) => acc?.[part], obj)
+}
+
+function isInactive(item: T): boolean {
+  return (item as { estado?: boolean }).estado === false
 }
 </script>
 
@@ -58,7 +63,11 @@ function getNestedValue(obj: any, path: string): any {
           </td>
         </tr>
         <tr v-else v-for="(item, index) in data" :key="index">
-          <td v-for="col in columns" :key="col.key">
+          <td
+            v-for="col in columns"
+            :key="col.key"
+            :class="{ 'opacity-50 line-through': dimInactive && isInactive(item) }"
+          >
             <slot :name="`cell-${col.key}`" :item="item" :value="getNestedValue(item, col.key)">
               {{ getNestedValue(item, col.key) }}
             </slot>
@@ -85,7 +94,12 @@ function getNestedValue(obj: any, path: string): any {
       :key="index"
       class="bg-white/5 rounded-xl p-4 space-y-2"
     >
-      <div v-for="(col, colIdx) in columns" :key="col.key" class="flex justify-between items-start gap-2">
+      <div
+        v-for="(col, colIdx) in columns"
+        :key="col.key"
+        class="flex justify-between items-start gap-2"
+        :class="{ 'opacity-50 line-through': dimInactive && isInactive(item) }"
+      >
         <span class="text-xs text-base-content/50 uppercase shrink-0">{{ col.label }}</span>
         <span class="text-sm text-right">
           <slot :name="`cell-${col.key}`" :item="item" :value="getNestedValue(item, col.key)">

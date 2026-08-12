@@ -134,7 +134,7 @@ onMounted(loadData)
             </label>
           </div>
         </div>
-        <DataTable :columns="columns" :data="visibleData" :loading="loading" emptyMessage="No hay roles">
+        <DataTable :columns="columns" :data="visibleData" :loading="loading" emptyMessage="No hay roles" dimInactive>
           <template #cell-nombre="{ item }">
             <span :class="{ 'opacity-50 line-through': !item.estado }">
               {{ item.nombre }}

@@ -121,7 +121,7 @@ onMounted(async () => {
             <span class="label-text text-sm">Mostrar inactivos</span>
           </label>
         </div>
-        <DataTable :columns="columns" :data="visibleData" :loading="loading" emptyMessage="No hay empleados">
+        <DataTable :columns="columns" :data="visibleData" :loading="loading" emptyMessage="No hay empleados" dimInactive>
           <template #cell-primerNombre="{ item }">
             <span :class="{ 'opacity-50 line-through': !item.estado }">
               {{ fullName(item) }}

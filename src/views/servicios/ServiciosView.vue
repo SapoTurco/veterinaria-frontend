@@ -159,7 +159,7 @@ onMounted(loadData)
             <span class="label-text text-sm">Mostrar inactivos</span>
           </label>
         </div>
-        <DataTable :columns="columns" :data="visibleData" :loading="loading" emptyMessage="No hay servicios">
+        <DataTable :columns="columns" :data="visibleData" :loading="loading" emptyMessage="No hay servicios" dimInactive>
           <template #cell-nombre="{ item }">
             <span :class="{ 'opacity-50 line-through': !item.estado }">
               {{ item.nombre }}
