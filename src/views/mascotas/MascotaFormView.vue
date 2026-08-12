@@ -10,6 +10,7 @@ const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
 const isEdit = !!route.params.id
+const MAX_MASCOTAS = 5
 
 const isCliente = authStore.hasRole('CLIENTE') && !authStore.hasAnyRole('ADMIN', 'RECEPCIONISTA', 'VETERINARIO', 'ESTILISTA')
 
@@ -27,6 +28,8 @@ const form = ref({
 const clientes = ref<any[]>([])
 const loading = ref(false)
 const error = ref('')
+const mascotasActivasCount = ref(0)
+const limitReached = ref(false)
 
 const species = ['Perro', 'Gato', 'Ave', 'Reptil', 'Conejo', 'Hamster', 'Otro']
 
@@ -50,6 +53,11 @@ onMounted(async () => {
     try {
       const res = await clientesApi.getProfile()
       form.value.idCliente = res.data.idCliente
+
+      const mascotasRes = await mascotasApi.getMisMascotas()
+      const mascotasActivas = (mascotasRes.data || []).filter((m: any) => m.estado === true)
+      mascotasActivasCount.value = mascotasActivas.length
+      limitReached.value = mascotasActivasCount.value >= MAX_MASCOTAS && !isEdit
     } catch (e) {
       console.error('Error loading profile', e)
     }
@@ -78,6 +86,13 @@ onMounted(async () => {
 async function handleSubmit() {
   loading.value = true
   error.value = ''
+
+  if (isCliente && !isEdit && mascotasActivasCount.value >= MAX_MASCOTAS) {
+    error.value = `Has alcanzado el límite de ${MAX_MASCOTAS} mascotas activas. Desactiva una mascota existente para agregar una nueva.`
+    loading.value = false
+    return
+  }
+
   try {
     const data: any = {
       idCliente: form.value.idCliente,
@@ -118,6 +133,13 @@ async function handleSubmit() {
 
     <div v-if="error" class="alert alert-error mb-4">
       <span>{{ error }}</span>
+    </div>
+
+    <div v-if="limitReached && !isEdit" class="alert alert-warning mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+      </svg>
+      <span>Has alcanzado el límite de {{ MAX_MASCOTAS }} mascotas activas. Desactiva una mascota existente para agregar una nueva.</span>
     </div>
 
     <form @submit.prevent="handleSubmit" class="space-y-3">
