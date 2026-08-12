@@ -99,7 +99,7 @@ async function handleRegister() {
   <div>
     <!-- Title -->
     <div class="text-center mb-6 form-field">
-      <h2 class="text-2xl font-extrabold text-[#FFFFE3]">Crear tu cuenta</h2>
+      <h2 class="text-xl sm:text-2xl font-extrabold text-[#FFFFE3]">Crear tu cuenta</h2>
       <p class="text-sm text-[#CBCBCB] mt-2">Únete a nuestra comunidad de mascotas</p>
     </div>
 
@@ -140,7 +140,7 @@ async function handleRegister() {
             </span>
           </div>
 
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="form-control">
               <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Primer nombre *</span></label>
               <input v-model="form.primerNombre" type="text" placeholder="Primer nombre" class="input input-bordered input-sm w-full input-animated" required />
@@ -151,7 +151,7 @@ async function handleRegister() {
             </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="form-control">
               <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Primer apellido *</span></label>
               <input v-model="form.primerApellido" type="text" placeholder="Primer apellido" class="input input-bordered input-sm w-full input-animated" required />
@@ -193,7 +193,7 @@ async function handleRegister() {
             </span>
           </div>
 
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="form-control">
               <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Tipo documento *</span></label>
               <select v-model="form.tipoDocumento" class="select select-bordered select-sm w-full input-animated">

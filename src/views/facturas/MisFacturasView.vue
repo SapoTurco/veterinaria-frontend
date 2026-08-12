@@ -139,8 +139,8 @@ onMounted(async () => {
 
 <template>
   <div>
-    <div class="flex items-center justify-between mb-6">
-      <h1 class="text-3xl font-extrabold text-[#FFFFE3]">Mis Facturas</h1>
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Mis Facturas</h1>
     </div>
 
     <div v-if="loading" class="flex justify-center py-12">
@@ -228,7 +228,7 @@ onMounted(async () => {
 
     <!-- Modal de Pago -->
     <dialog :class="{ 'modal modal-open': showPayModal }" v-if="showPayModal">
-      <div class="modal-box bg-[#1a1a2e] border border-white/10 max-w-sm p-0">
+      <div class="modal-box bg-[#1a1a2e] max-w-sm p-0">
         <!-- Exito -->
         <div v-if="exitoPago" class="px-5 py-8 text-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -282,7 +282,7 @@ onMounted(async () => {
                 </div>
               </div>
 
-              <div class="px-0 py-3 border-t border-white/10 flex justify-end gap-2">
+              <div class="px-0 py-3 flex justify-end gap-2">
                 <button type="button" class="btn btn-ghost btn-sm" @click="closePayModal">Cancelar</button>
                 <button type="submit" class="btn btn-success btn-sm gap-1" :disabled="saving || pagoForm.idMetodoPago === 0 || pagoForm.monto <= 0">
                   <span v-if="saving" class="loading loading-spinner loading-xs"></span>

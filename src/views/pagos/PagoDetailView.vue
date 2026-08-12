@@ -56,14 +56,14 @@ function formatCurrency(valor: number) {
           </svg>
         </button>
         <div class="flex-1">
-          <h1 class="text-2xl font-extrabold text-[#FFFFE3]">Pago #{{ pago.idPago }}</h1>
+          <h1 class="text-xl sm:text-2xl font-extrabold text-[#FFFFE3]">Pago #{{ pago.idPago }}</h1>
           <p class="text-sm text-base-content/50">Detalle del pago</p>
         </div>
         <span class="badge badge-lg badge-success">Completado</span>
       </div>
 
       <!-- Info Card -->
-      <div class="bg-base-100 rounded-2xl border border-base-300 overflow-hidden mb-6">
+      <div class="bg-base-100 rounded-2xl overflow-hidden mb-6">
         <div class="bg-gradient-to-r from-[#0D7377]/20 to-transparent px-6 py-5 flex items-center gap-5">
           <div class="w-16 h-16 rounded-full bg-gradient-to-br from-success/30 to-success/10 flex items-center justify-center shadow-lg">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">

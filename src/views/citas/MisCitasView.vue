@@ -90,8 +90,8 @@ onMounted(async () => {
 
 <template>
   <div>
-    <div class="flex items-center justify-between mb-6">
-      <h1 class="text-3xl font-extrabold text-[#FFFFE3]">Mis Citas</h1>
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Mis Citas</h1>
       <div class="flex items-center gap-2">
         <select v-model="filtroEstado" class="select select-bordered select-sm h-10 text-sm min-w-[140px]" @change="page = 0">
           <option value="">Todas</option>

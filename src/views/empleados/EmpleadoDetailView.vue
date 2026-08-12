@@ -148,7 +148,7 @@ function formatFecha(fecha: string | null) {
           </svg>
         </button>
         <div class="flex-1">
-          <h1 class="text-2xl font-extrabold text-[#FFFFE3] flex items-center gap-2">
+          <h1 class="text-xl sm:text-2xl font-extrabold text-[#FFFFE3] flex items-center gap-2">
             {{ fullName }}
             <svg v-if="tieneCuenta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-primary inline-block shrink-0" title="Tiene cuenta de acceso">
               <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
@@ -166,7 +166,7 @@ function formatFecha(fecha: string | null) {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01" />
             </svg>
           </div>
-          <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-[#2A2A2A] border border-white/10 rounded-xl w-52 z-50">
+          <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-[#2A2A2A] rounded-xl w-52 z-50">
             <li><a @click="router.push(`/empleados/${id}/editar`)" class="text-[#CBCBCB] hover:bg-white/10 hover:text-[#FFFFE3]">Editar</a></li>
             <li><a @click="openPasswordDialog" class="text-[#CBCBCB] hover:bg-white/10 hover:text-[#FFFFE3]">Restablecer contraseña</a></li>
             <li v-if="empleado.estado"><a @click="showDeleteDialog = true" class="text-red-400 hover:bg-red-500/20">Desactivar</a></li>
@@ -176,7 +176,7 @@ function formatFecha(fecha: string | null) {
       </div>
 
       <!-- Info Card -->
-      <div class="bg-base-100 rounded-2xl border border-base-300 overflow-hidden mb-6">
+      <div class="bg-base-100 rounded-2xl overflow-hidden mb-6">
         <div class="bg-gradient-to-r from-[#0D7377]/20 to-transparent px-6 py-5 flex items-center gap-5">
           <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#0D7377] to-[#4A4A4A] flex items-center justify-center shadow-lg">
             <span class="text-[#FFFFE3] font-bold text-xl">{{ initials }}</span>
@@ -221,7 +221,7 @@ function formatFecha(fecha: string | null) {
     </template>
 
     <dialog :class="{ modal: true, 'modal-open': showPasswordDialog }" v-if="showPasswordDialog">
-      <div class="modal-box bg-[#1a1a2e] border border-white/10 w-96">
+      <div class="modal-box bg-[#1a1a2e] w-full max-w-sm sm:w-96">
         <h3 class="font-bold text-lg text-[#FFFFE3] mb-1 flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
@@ -274,7 +274,7 @@ function formatFecha(fecha: string | null) {
             </div>
           </div>
 
-          <div class="modal-action border-t border-white/10 pt-4 -mb-4">
+          <div class="modal-action pt-4 -mb-4">
             <button type="button" class="btn btn-ghost btn-sm" :disabled="resetPasswordLoading" @click="showPasswordDialog = false">Cancelar</button>
             <button type="submit" class="btn btn-primary btn-sm gap-1" :disabled="resetPasswordLoading">
               <span v-if="resetPasswordLoading" class="loading loading-spinner loading-sm"></span>

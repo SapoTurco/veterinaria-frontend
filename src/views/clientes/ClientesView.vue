@@ -109,8 +109,8 @@ onMounted(loadData)
 
 <template>
   <div>
-    <div class="flex items-center justify-between mb-6">
-      <h1 class="text-3xl font-extrabold text-[#FFFFE3]">Clientes</h1>
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Clientes</h1>
       <button class="btn btn-primary" @click="router.push('/clientes/nueva')">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -130,7 +130,7 @@ onMounted(loadData)
 
     <div class="card bg-base-100 shadow-md">
       <div class="card-body">
-        <div class="flex items-center gap-4 mb-4">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-4">
           <div class="flex-1">
             <SearchFilter v-model="search" @search="handleSearch" placeholder="Buscar por nombre, documento..." />
           </div>

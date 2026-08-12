@@ -98,8 +98,8 @@ onMounted(async () => {
 
 <template>
   <div>
-    <div class="flex items-center justify-between mb-6">
-      <h1 class="text-3xl font-extrabold text-[#FFFFE3]">Empleados</h1>
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Empleados</h1>
       <button class="btn btn-primary" @click="router.push('/empleados/nueva')">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />

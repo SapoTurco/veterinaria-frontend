@@ -43,8 +43,8 @@ function goToPage(page: number) {
 </script>
 
 <template>
-  <div class="flex items-center justify-between mt-4 px-2">
-    <div class="text-sm text-base-content/60">
+  <div class="flex flex-col sm:flex-row items-center justify-between gap-3 mt-4 px-2">
+    <div class="text-xs sm:text-sm text-base-content/60 text-center sm:text-left">
       Mostrando {{ page * size + 1 }} - {{ Math.min((page + 1) * size, totalElements) }}
       de {{ totalElements }} registros
     </div>

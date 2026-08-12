@@ -95,8 +95,8 @@ onMounted(loadData)
 
 <template>
   <div>
-    <div class="flex items-center justify-between mb-6">
-      <h1 class="text-3xl font-extrabold text-[#FFFFE3]">Facturas</h1>
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Facturas</h1>
     </div>
 
     <div v-if="error" class="alert alert-error mb-4">

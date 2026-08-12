@@ -18,7 +18,8 @@ function getNestedValue(obj: any, path: string): any {
 </script>
 
 <template>
-  <div class="overflow-x-auto">
+  <!-- Desktop table -->
+  <div class="overflow-x-auto hidden sm:block">
     <table class="table table-zebra w-full">
       <thead>
         <tr>
@@ -68,5 +69,33 @@ function getNestedValue(obj: any, path: string): any {
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Mobile cards -->
+  <div class="sm:hidden space-y-3">
+    <div v-if="loading" class="flex justify-center py-8">
+      <span class="loading loading-spinner loading-md text-primary"></span>
+    </div>
+    <div v-else-if="data.length === 0" class="text-center py-8 text-base-content/50">
+      {{ emptyMessage || 'No hay datos disponibles' }}
+    </div>
+    <div
+      v-else
+      v-for="(item, index) in data"
+      :key="index"
+      class="bg-white/5 rounded-xl p-4 space-y-2"
+    >
+      <div v-for="(col, colIdx) in columns" :key="col.key" class="flex justify-between items-start gap-2">
+        <span class="text-xs text-base-content/50 uppercase shrink-0">{{ col.label }}</span>
+        <span class="text-sm text-right">
+          <slot :name="`cell-${col.key}`" :item="item" :value="getNestedValue(item, col.key)">
+            {{ getNestedValue(item, col.key) }}
+          </slot>
+        </span>
+      </div>
+      <div class="pt-2 flex justify-end">
+        <slot name="actions" :item="item" />
+      </div>
+    </div>
   </div>
 </template>

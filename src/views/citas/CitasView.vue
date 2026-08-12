@@ -372,8 +372,8 @@ onMounted(() => {
 
 <template>
   <div>
-    <div class="flex items-center justify-between mb-6">
-      <h1 class="text-3xl font-extrabold text-[#FFFFE3]">Citas</h1>
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Citas</h1>
       <button v-if="!esEmpleado" class="btn btn-primary" @click="router.push('/citas/nueva')">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -458,7 +458,7 @@ onMounted(() => {
             <span>{{ confirmError }}</span>
           </div>
 
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="form-control">
               <label class="label py-0"><span class="label-text font-medium text-sm">Servicio *</span></label>
               <SearchSelect
@@ -495,7 +495,7 @@ onMounted(() => {
 
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Fecha *</span></label>
-            <div class="border border-base-300 rounded-xl p-4 bg-base-50">
+            <div class="rounded-xl p-4 bg-base-50">
               <CalendarDayPicker
                 v-model="confirmForm.fechaCita"
                 :min-date="minDate"

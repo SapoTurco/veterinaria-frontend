@@ -162,7 +162,7 @@ async function handleSaveProfile() {
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
         </svg>
       </button>
-      <h1 class="text-3xl font-extrabold text-[#FFFFE3]">Mi Perfil</h1>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Mi Perfil</h1>
     </div>
 
     <div v-if="error" class="alert alert-error mb-4">
@@ -334,7 +334,7 @@ async function handleSaveProfile() {
             </p>
             <div class="bg-base-200/50 rounded-lg p-4 space-y-3">
               <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide">Datos personales</h4>
-              <div class="grid grid-cols-2 gap-3">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div class="form-control">
                   <label class="label py-0"><span class="label-text font-medium text-sm">Primer nombre *</span></label>
                   <input v-model="editForm.primerNombre" type="text" class="input input-bordered input-sm w-full" required :disabled="!isCliente" />
@@ -344,7 +344,7 @@ async function handleSaveProfile() {
                   <input v-model="editForm.segundoNombre" type="text" class="input input-bordered input-sm w-full" :disabled="!isCliente" />
                 </div>
               </div>
-              <div class="grid grid-cols-2 gap-3">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div class="form-control">
                   <label class="label py-0"><span class="label-text font-medium text-sm">Primer apellido *</span></label>
                   <input v-model="editForm.primerApellido" type="text" class="input input-bordered input-sm w-full" required :disabled="!isCliente" />
@@ -358,7 +358,7 @@ async function handleSaveProfile() {
 
             <div class="bg-base-200/50 rounded-lg p-4 space-y-3">
               <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide">Contacto</h4>
-              <div class="grid grid-cols-2 gap-3">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div class="form-control">
                   <label class="label py-0"><span class="label-text font-medium text-sm">Correo</span></label>
                   <input v-model="editForm.correo" type="email" class="input input-bordered input-sm w-full" :disabled="!isCliente" />
@@ -393,7 +393,7 @@ async function handleSaveProfile() {
                 autocomplete="current-password"
               />
             </div>
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div class="form-control">
                 <label class="label py-0"><span class="label-text font-medium text-sm">Nueva contraseña</span></label>
                 <input

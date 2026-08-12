@@ -138,7 +138,7 @@ async function handleAnular() {
           </svg>
         </button>
         <div class="flex-1">
-          <h1 class="text-2xl font-extrabold text-[#FFFFE3]">Factura #{{ factura.idFactura }}</h1>
+          <h1 class="text-xl sm:text-2xl font-extrabold text-[#FFFFE3]">Factura #{{ factura.idFactura }}</h1>
           <p class="text-sm text-base-content/50">Detalle de la factura</p>
         </div>
         <button
@@ -159,7 +159,7 @@ async function handleAnular() {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01" />
             </svg>
           </div>
-          <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-[#2A2A2A] border border-white/10 rounded-xl w-52 z-50">
+          <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-[#2A2A2A] rounded-xl w-52 z-50">
             <li>
               <a @click="showAnulDialog = true" class="text-red-400 hover:bg-red-500/20">Anular</a>
             </li>
@@ -168,7 +168,7 @@ async function handleAnular() {
       </div>
 
       <!-- Info Card -->
-      <div class="bg-base-100 rounded-2xl border border-base-300 overflow-hidden mb-6">
+      <div class="bg-base-100 rounded-2xl overflow-hidden mb-6">
         <div class="bg-gradient-to-r from-[#0D7377]/20 to-transparent px-6 py-5 flex items-center gap-5">
           <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center shadow-lg">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -205,7 +205,7 @@ async function handleAnular() {
       </div>
 
       <!-- Items -->
-      <div class="bg-base-100 rounded-2xl border border-base-300 overflow-hidden">
+      <div class="bg-base-100 rounded-2xl overflow-hidden">
         <div v-if="!factura.items || factura.items.length === 0" class="px-6 py-12 text-center text-base-content/40">
           No hay items en esta factura
         </div>
@@ -249,7 +249,7 @@ async function handleAnular() {
 
     <!-- Modal de pago -->
     <dialog :class="{ 'modal modal-open': showPagoModal }" v-if="showPagoModal">
-      <div class="modal-box bg-[#1a1a2e] border border-white/10 max-w-sm p-0">
+      <div class="modal-box bg-[#1a1a2e] max-w-sm p-0">
         <div class="px-5 pt-5 pb-4">
           <div class="flex items-center justify-between mb-4">
             <h3 class="font-bold text-lg text-[#FFFFE3]">Pagar factura #{{ factura?.idFactura }}</h3>
@@ -292,7 +292,7 @@ async function handleAnular() {
           </div>
         </div>
 
-        <div class="px-5 py-3 border-t border-white/10 flex justify-end gap-2">
+        <div class="px-5 py-3 flex justify-end gap-2">
           <button class="btn btn-ghost btn-sm" :disabled="pagando" @click="cerrarPago">Cancelar</button>
           <button
             class="btn btn-success btn-sm gap-1"

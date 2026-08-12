@@ -89,7 +89,7 @@ onMounted(async () => {
 
 <template>
   <div>
-    <h1 class="text-3xl font-extrabold mb-6 text-[#FFFFE3]">
+    <h1 class="text-2xl sm:text-3xl font-extrabold mb-6 text-[#FFFFE3]">
       Bienvenido, {{ authStore.nombreCompleto }}
     </h1>
 
@@ -242,7 +242,7 @@ onMounted(async () => {
 
       <!-- Vista para clientes -->
       <template v-if="authStore.hasRole('CLIENTE')">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
           <div class="stat-card rounded-2xl p-6 group hover:scale-[1.02] transition-transform duration-300" v-if="authStore.hasModule('MASCOTAS')">
             <div class="flex items-center gap-4">
               <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#1A8A8E] to-[#0D7377] flex items-center justify-center shadow-lg shadow-[#1A8A8E]/20">
@@ -356,19 +356,16 @@ onMounted(async () => {
 .stat-card {
   background: rgba(42, 42, 42, 0.7);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(203, 203, 203, 0.08);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
 }
 
 .stat-card:hover {
-  border-color: rgba(13, 115, 119, 0.2);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .dashboard-card {
   background: rgba(42, 42, 42, 0.6);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(203, 203, 203, 0.08);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
 }
 
@@ -382,25 +379,21 @@ onMounted(async () => {
   font-weight: 600;
   color: #FFFFE3;
   background: rgba(13, 115, 119, 0.15);
-  border: 1px solid rgba(13, 115, 119, 0.2);
   transition: all 0.2s ease;
 }
 
 .dashboard-btn:hover {
   background: rgba(13, 115, 119, 0.3);
-  border-color: rgba(13, 115, 119, 0.4);
   transform: translateY(-1px);
 }
 
 .cita-item {
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(203, 203, 203, 0.06);
   transition: all 0.2s ease;
 }
 
 .cita-item:hover {
   background: rgba(13, 115, 119, 0.15);
-  border-color: rgba(13, 115, 119, 0.3);
   transform: translateX(2px);
 }
 </style>

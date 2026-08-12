@@ -87,7 +87,7 @@ async function handleSubmit() {
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
       </button>
       <div>
-        <h1 class="text-3xl font-extrabold text-[#FFFFE3]">{{ isEdit ? 'Editar Cliente' : 'Nuevo Cliente' }}</h1>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">{{ isEdit ? 'Editar Cliente' : 'Nuevo Cliente' }}</h1>
         <p class="text-sm text-base-content/60">{{ isEdit ? 'Actualiza los datos del cliente' : 'Registra un nuevo cliente en el sistema' }}</p>
       </div>
     </div>
@@ -98,12 +98,12 @@ async function handleSubmit() {
 
     <form @submit.prevent="handleSubmit" class="space-y-3">
       <!-- Documento -->
-      <div class="bg-base-100 rounded-xl border border-base-300 p-5 space-y-3">
+      <div class="bg-base-100 rounded-xl p-5 space-y-3">
         <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0" /></svg>
           Documento
         </h4>
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Tipo *</span></label>
             <select v-model="form.tipoDocumento" class="select select-bordered select-sm w-full" required>
@@ -120,12 +120,12 @@ async function handleSubmit() {
       </div>
 
       <!-- Datos personales -->
-      <div class="bg-base-100 rounded-xl border border-base-300 p-5 space-y-3">
+      <div class="bg-base-100 rounded-xl p-5 space-y-3">
         <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
           Datos personales
         </h4>
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Primer nombre *</span></label>
             <input v-model="form.primerNombre" type="text" class="input input-bordered input-sm w-full" required placeholder="Primer nombre" />
@@ -135,7 +135,7 @@ async function handleSubmit() {
             <input v-model="form.segundoNombre" type="text" class="input input-bordered input-sm w-full" placeholder="Segundo nombre" />
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Primer apellido *</span></label>
             <input v-model="form.primerApellido" type="text" class="input input-bordered input-sm w-full" required placeholder="Primer apellido" />
@@ -148,12 +148,12 @@ async function handleSubmit() {
       </div>
 
       <!-- Contacto -->
-      <div class="bg-base-100 rounded-xl border border-base-300 p-5 space-y-3">
+      <div class="bg-base-100 rounded-xl p-5 space-y-3">
         <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
           Contacto
         </h4>
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Telefono</span></label>
             <input v-model="form.telefono" type="tel" class="input input-bordered input-sm w-full" placeholder="Telefono" />
@@ -170,7 +170,7 @@ async function handleSubmit() {
       </div>
 
       <!-- Credenciales (solo al crear) -->
-      <div v-if="!isEdit" class="bg-base-100 rounded-xl border border-base-300 p-5 space-y-3">
+      <div v-if="!isEdit" class="bg-base-100 rounded-xl p-5 space-y-3">
         <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" /></svg>
           Credenciales de acceso
@@ -194,7 +194,7 @@ async function handleSubmit() {
       </div>
 
       <!-- Cambiar contrasena (solo al editar) -->
-      <div v-if="isEdit" class="bg-base-100 rounded-xl border border-base-300 p-5 space-y-3">
+      <div v-if="isEdit" class="bg-base-100 rounded-xl p-5 space-y-3">
         <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" /></svg>
           Cambiar contrasena

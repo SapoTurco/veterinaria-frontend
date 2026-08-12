@@ -326,7 +326,7 @@ async function handleConfirmar() {
           </svg>
         </button>
         <div class="flex-1">
-          <h1 class="text-2xl font-extrabold text-[#FFFFE3]">
+          <h1 class="text-xl sm:text-2xl font-extrabold text-[#FFFFE3]">
             Cita #{{ numeroCita ?? cita.idCita }}
             <span v-if="totalCitasCliente !== null" class="text-sm font-medium text-base-content/40">de {{ totalCitasCliente }}</span>
           </h1>
@@ -370,7 +370,7 @@ async function handleConfirmar() {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01" />
               </svg>
             </div>
-            <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-[#2A2A2A] border border-white/10 rounded-xl w-52 z-50">
+            <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-[#2A2A2A] rounded-xl w-52 z-50">
               <li>
                 <a @click="router.push(`/citas/${cita.idCita}/editar`)" class="text-[#CBCBCB] hover:bg-white/10 hover:text-[#FFFFE3]">
                   Editar
@@ -385,7 +385,7 @@ async function handleConfirmar() {
       </div>
 
       <!-- Info Card -->
-      <div class="bg-base-100 rounded-2xl border border-base-300 overflow-hidden mb-6">
+      <div class="bg-base-100 rounded-2xl overflow-hidden mb-6">
         <div class="bg-gradient-to-r from-[#0D7377]/20 to-transparent px-6 py-5 flex items-center gap-5">
           <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center shadow-lg">
             <span class="text-primary font-bold text-xl">{{ initials }}</span>
@@ -446,7 +446,7 @@ async function handleConfirmar() {
       </div>
 
       <!-- Detalles adicionales -->
-      <div v-if="cita.motivo || cita.observaciones" class="bg-base-100 rounded-2xl border border-base-300 overflow-hidden">
+      <div v-if="cita.motivo || cita.observaciones" class="bg-base-100 rounded-2xl overflow-hidden">
         <div class="px-6 py-4 border-b border-base-300">
           <h3 class="font-bold text-[#FFFFE3]">Detalles</h3>
         </div>
@@ -464,7 +464,7 @@ async function handleConfirmar() {
 
       <!-- Assign Modal -->
       <dialog :class="{ 'modal modal-open': showAssignModal }" v-if="showAssignModal">
-        <div class="modal-box bg-[#1a1a2e] border border-white/10">
+        <div class="modal-box bg-[#1a1a2e]">
           <h3 class="font-bold text-lg text-[#FFFFE3] mb-4">
             {{ cita.estadoCita === 'PENDIENTE' ? 'Asignar Cita' : 'Reasignar Cita' }}
           </h3>
@@ -521,7 +521,7 @@ async function handleConfirmar() {
 
       <!-- Historial / Detalle de la atención -->
       <dialog :class="{ 'modal modal-open': showHistorialModal }" v-if="showHistorialModal && historialCita">
-        <div class="modal-box bg-[#1a1a2e] border border-white/10">
+        <div class="modal-box bg-[#1a1a2e]">
           <h3 class="font-bold text-lg text-[#FFFFE3] mb-4 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -551,7 +551,7 @@ async function handleConfirmar() {
 
       <!-- Pago de factura -->
       <dialog :class="{ 'modal modal-open': showPagoModal }" v-if="showPagoModal && facturaCita">
-        <div class="modal-box bg-[#1a1a2e] border border-white/10">
+        <div class="modal-box bg-[#1a1a2e]">
           <h3 class="font-bold text-lg text-[#FFFFE3] mb-2 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h2m4 0h2m-9-5l2-4m9 4l-2-4M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" />

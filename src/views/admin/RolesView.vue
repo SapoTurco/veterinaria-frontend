@@ -106,8 +106,8 @@ onMounted(loadData)
 
 <template>
   <div>
-    <div class="flex items-center justify-between mb-6">
-      <h1 class="text-3xl font-extrabold text-[#FFFFE3]">Roles</h1>
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Roles</h1>
       <button class="btn btn-primary" @click="openForm()">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -158,7 +158,7 @@ onMounted(loadData)
     <!-- Form Modal -->
     <dialog :class="{ modal: true, 'modal-open': showForm }">
       <div class="modal-box max-w-lg">
-        <div class="flex items-center justify-between mb-4">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
           <h3 class="font-bold text-xl">{{ editMode ? 'Editar Rol' : 'Nuevo Rol' }}</h3>
           <button class="btn btn-ghost btn-sm btn-circle" @click="showForm = false">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>

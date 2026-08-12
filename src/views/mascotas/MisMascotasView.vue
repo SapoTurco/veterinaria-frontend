@@ -23,8 +23,8 @@ onMounted(async () => {
 
 <template>
   <div>
-    <div class="flex items-center justify-between mb-6">
-      <h1 class="text-3xl font-extrabold text-[#FFFFE3]">Mis Mascotas</h1>
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Mis Mascotas</h1>
     </div>
 
     <div v-if="loading" class="flex justify-center py-12">
@@ -71,7 +71,7 @@ onMounted(async () => {
             </div>
           </div>
           <div class="divider my-1"></div>
-          <div class="grid grid-cols-2 gap-2 text-sm">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
             <div>
               <span class="text-base-content/50">Sexo:</span>
               <span class="ml-1">{{ mascota.sexo }}</span>

@@ -56,7 +56,7 @@ async function handleSubmit() {
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
       </button>
       <div>
-        <h1 class="text-3xl font-extrabold text-[#FFFFE3]">Registrar Consulta Medica</h1>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Registrar Consulta Medica</h1>
         <p class="text-sm text-base-content/60">Completa la información clínica de la cita #{{ idCita }}</p>
       </div>
     </div>
@@ -72,12 +72,12 @@ async function handleSubmit() {
 
     <form v-if="!success" @submit.prevent="handleSubmit" class="space-y-3">
       <!-- Signos vitales -->
-      <div class="bg-base-100 rounded-xl border border-base-300 p-5 space-y-3">
+      <div class="bg-base-100 rounded-xl p-5 space-y-3">
         <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
           Signos vitales
         </h4>
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Peso (kg)</span></label>
             <input type="number" v-model.number="form.peso" class="input input-bordered input-sm w-full" step="0.1" min="0" placeholder="Ej: 5.2" />
@@ -90,7 +90,7 @@ async function handleSubmit() {
       </div>
 
       <!-- Evaluación clínica -->
-      <div class="bg-base-100 rounded-xl border border-base-300 p-5 space-y-3">
+      <div class="bg-base-100 rounded-xl p-5 space-y-3">
         <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
           Evaluación clínica
@@ -106,7 +106,7 @@ async function handleSubmit() {
       </div>
 
       <!-- Tratamiento -->
-      <div class="bg-base-100 rounded-xl border border-base-300 p-5 space-y-3">
+      <div class="bg-base-100 rounded-xl p-5 space-y-3">
         <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
           Tratamiento

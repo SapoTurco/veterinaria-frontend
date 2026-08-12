@@ -33,7 +33,7 @@ async function handleLogin() {
   <div>
     <!-- Title -->
     <div class="text-center mb-8 form-field">
-      <h2 class="text-2xl font-extrabold text-[#FFFFE3]">Bienvenido de vuelta</h2>
+      <h2 class="text-xl sm:text-2xl font-extrabold text-[#FFFFE3]">Bienvenido de vuelta</h2>
       <p class="text-sm text-[#CBCBCB] mt-2">Ingresa tus credenciales para continuar</p>
     </div>
 

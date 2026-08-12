@@ -136,7 +136,7 @@ function formatHora(hora: string) {
           </svg>
         </button>
         <div class="flex-1">
-          <h1 class="text-2xl font-extrabold text-[#FFFFE3]">{{ mascota.nombre }}</h1>
+          <h1 class="text-xl sm:text-2xl font-extrabold text-[#FFFFE3]">{{ mascota.nombre }}</h1>
           <p class="text-sm text-base-content/50">Detalle de mascota</p>
         </div>
         <span class="badge badge-lg" :class="mascota.estado ? 'badge-success' : 'badge-error'">
@@ -149,7 +149,7 @@ function formatHora(hora: string) {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01" />
             </svg>
           </div>
-          <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-[#2A2A2A] border border-white/10 rounded-xl w-52 z-50">
+          <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-[#2A2A2A] rounded-xl w-52 z-50">
             <li><a @click="router.push(`/mascotas/${id}/editar`)" class="text-[#CBCBCB] hover:bg-white/10 hover:text-[#FFFFE3]">Editar</a></li>
             <li v-if="mascota.estado"><a @click="showDeleteDialog = true" class="text-red-400 hover:bg-red-500/20">Desactivar</a></li>
             <li v-if="!mascota.estado"><a @click="showReactivateDialog = true" class="text-green-400 hover:bg-green-500/20">Reactivar</a></li>
@@ -158,7 +158,7 @@ function formatHora(hora: string) {
       </div>
 
       <!-- Info Card -->
-      <div class="bg-base-100 rounded-2xl border border-base-300 overflow-hidden mb-6">
+      <div class="bg-base-100 rounded-2xl overflow-hidden mb-6">
         <div class="bg-gradient-to-r from-[#0D7377]/20 to-transparent px-6 py-5 flex items-center gap-5">
           <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center shadow-lg">
             <span class="text-primary font-bold text-xl">{{ initials }}</span>
@@ -204,7 +204,7 @@ function formatHora(hora: string) {
       </div>
 
       <!-- Historial de Citas -->
-      <div class="bg-base-100 rounded-2xl border border-base-300 overflow-hidden">
+      <div class="bg-base-100 rounded-2xl overflow-hidden">
         <div class="px-6 py-4 border-b border-base-300">
           <h3 class="font-bold text-[#FFFFE3]">Historial de Citas ({{ citas.length }})</h3>
         </div>
