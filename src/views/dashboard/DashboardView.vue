@@ -51,10 +51,16 @@ onMounted(async () => {
         .slice(0, 3)
     } else {
       const esProfesional = authStore.hasAnyRole('VETERINARIO', 'ESTILISTA')
+      if (esProfesional) {
+        await authStore.cargarEmpleadoActual()
+      }
+      const citasPromise = esProfesional && authStore.idEmpleadoActual
+        ? citasApi.getByEmpleado(authStore.idEmpleadoActual)
+        : citasApi.getAll()
       const [clientes, mascotas, citas, facturas] = await Promise.allSettled([
         authStore.hasModule('CLIENTES') ? clientesApi.getAll() : Promise.resolve({ data: [] }),
         authStore.hasModule('MASCOTAS') ? mascotasApi.getAll() : Promise.resolve({ data: [] }),
-        authStore.hasModule('CITAS') ? (esProfesional ? citasApi.getMisCitas() : citasApi.getAll()) : Promise.resolve({ data: [] }),
+        authStore.hasModule('CITAS') ? citasPromise : Promise.resolve({ data: [] }),
         authStore.hasModule('FACTURACION') ? facturasApi.getAll() : Promise.resolve({ data: [] }),
       ])
       const clientesData = clientes.status === 'fulfilled' ? clientes.value : { data: [] }
