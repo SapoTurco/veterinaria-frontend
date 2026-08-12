@@ -177,19 +177,18 @@ onMounted(async () => {
           </div>
 
           <div class="dashboard-card rounded-2xl p-6">
-            <h2 class="text-lg font-bold text-[#FFFFE3] mb-4">Informacion del sistema</h2>
+            <h2 class="text-lg font-bold text-[#FFFFE3] mb-4">Sobre VetClinic</h2>
             <div class="space-y-3 mt-4 text-sm">
-              <div class="flex justify-between items-center py-2 border-b border-white/5">
-                <span class="text-[#CBCBCB]/60">Version:</span>
-                <span class="font-medium text-[#FFFFE3] bg-white/5 px-3 py-1 rounded-full text-xs">1.0.0</span>
+              <div class="py-2 border-b border-white/5">
+                <span class="text-[#CBCBCB]/80 leading-relaxed block">Sistema de gestion integral para clinicas veterinarias. Administra mascotas, clientes, citas, servicios y facturacion en un solo lugar.</span>
               </div>
               <div class="flex justify-between items-center py-2 border-b border-white/5">
-                <span class="text-[#CBCBCB]/60">Backend:</span>
-                <span class="font-medium text-[#FFFFE3] bg-white/5 px-3 py-1 rounded-full text-xs">Spring Boot 3 + Kotlin</span>
+                <span class="text-[#CBCBCB]/60">Mascotas registradas:</span>
+                <span class="font-medium text-[#FFFFE3] bg-white/5 px-3 py-1 rounded-full text-xs">{{ stats.mascotas }}</span>
               </div>
-              <div class="flex justify-between items-center py-2 border-b border-white/5">
-                <span class="text-[#CBCBCB]/60">Frontend:</span>
-                <span class="font-medium text-[#FFFFE3] bg-white/5 px-3 py-1 rounded-full text-xs">Vue 3 + TypeScript</span>
+              <div class="flex justify-between items-center py-2">
+                <span class="text-[#CBCBCB]/60">Citas este mes:</span>
+                <span class="font-medium text-[#FFFFE3] bg-white/5 px-3 py-1 rounded-full text-xs">{{ stats.citas }}</span>
               </div>
             </div>
           </div>
