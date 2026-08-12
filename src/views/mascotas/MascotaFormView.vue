@@ -38,6 +38,14 @@ const formValid = computed(() =>
   form.value.sexo !== ''
 )
 
+const pesoError = computed(() => {
+  if (!form.value.peso) return ''
+  const peso = Number(form.value.peso)
+  return Number.isFinite(peso) && peso >= 0.01 && peso <= 500
+    ? ''
+    : 'El peso debe estar entre 0.01 y 500 kg'
+})
+
 const species = ['Perro', 'Gato', 'Ave', 'Reptil', 'Conejo', 'Hamster', 'Otro']
 
 const hoy = computed(() => {
@@ -97,14 +105,13 @@ onMounted(async () => {
 
 async function handleSubmit() {
   submitted.value = true
+  error.value = ''
 
-  if (!formValid.value) {
+  if (!formValid.value || pesoError.value) {
     return
   }
 
   loading.value = true
-  error.value = ''
-
   if (isCliente && !isEdit && mascotasActivasCount.value >= MAX_MASCOTAS) {
     error.value = `Has alcanzado el límite de ${MAX_MASCOTAS} mascotas activas. Desactiva una mascota existente para agregar una nueva.`
     loading.value = false
@@ -207,7 +214,10 @@ async function handleSubmit() {
           </div>
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Peso (kg)</span></label>
-            <input v-model="form.peso" type="number" step="0.1" min="0" class="input input-bordered input-sm w-full" placeholder="Ej: 5.2" />
+            <input v-model="form.peso" type="number" step="0.01" class="input input-bordered input-sm w-full" placeholder="Ej: 5.2" />
+            <label v-if="pesoError" class="label py-0">
+              <span class="label-text-alt text-error text-xs">{{ pesoError }}</span>
+            </label>
           </div>
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Fecha nacimiento *</span></label>

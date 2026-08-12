@@ -99,14 +99,14 @@ async function handleSubmit() {
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Peso (kg)</span></label>
-            <input type="number" v-model.number="form.peso" class="input input-bordered input-sm w-full" step="0.01" min="0.01" max="500" placeholder="Ej: 5.2" />
+            <input type="number" v-model.number="form.peso" class="input input-bordered input-sm w-full" step="0.01" placeholder="Ej: 5.2" />
             <label v-if="pesoError" class="label py-0">
               <span class="label-text-alt text-error text-xs">{{ pesoError }}</span>
             </label>
           </div>
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Temperatura (C)</span></label>
-            <input type="number" v-model.number="form.temperatura" class="input input-bordered input-sm w-full" step="0.1" min="30" max="45" placeholder="Ej: 38.5" />
+            <input type="number" v-model.number="form.temperatura" class="input input-bordered input-sm w-full" step="0.1" placeholder="Ej: 38.5" />
             <label v-if="temperaturaError" class="label py-0">
               <span class="label-text-alt text-error text-xs">{{ temperaturaError }}</span>
             </label>
