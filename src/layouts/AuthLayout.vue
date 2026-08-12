@@ -33,7 +33,7 @@ import { RouterView } from 'vue-router'
           <img src="/logo.svg" alt="VetClinic" class="w-20 h-20 rounded-full" />
         </div>
         <h1 class="text-3xl font-extrabold gradient-text">VetClinic</h1>
-        <p class="text-[#CBCBCB] mt-2 text-sm font-medium">Sistema de Gestion Veterinaria</p>
+
       </div>
 
       <!-- Auth card with glass effect -->
