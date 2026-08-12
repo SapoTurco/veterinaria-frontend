@@ -111,6 +111,12 @@ async function handleSubmit() {
     return
   }
 
+  if (form.value.fechaNacimiento && form.value.fechaNacimiento > hoy.value) {
+    error.value = 'La fecha de nacimiento no puede ser una fecha futura'
+    loading.value = false
+    return
+  }
+
   try {
     const data: any = {
       idCliente: form.value.idCliente,
