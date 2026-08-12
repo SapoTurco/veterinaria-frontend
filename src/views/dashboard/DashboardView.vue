@@ -21,7 +21,9 @@ const proximasCitas = ref<any[]>([])
 
 function formatCitaFecha(fecha: string): string {
   if (!fecha) return ''
-  const [y, m, d] = fecha.split('-')
+  const parts = fecha.split('-')
+  const d = parts[2] || ''
+  const m = parts[1] || ''
   return `${parseInt(d)}/${parseInt(m)}`
 }
 
