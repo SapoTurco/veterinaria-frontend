@@ -10,10 +10,18 @@ const router = useRouter()
 const mascotas = ref<Mascota[]>([])
 const loading = ref(true)
 const error = ref('')
+const showLimitDialog = ref(false)
 
 const mascotasActivas = computed(() => mascotas.value.filter(m => m.estado === true))
-const cuposDisponibles = computed(() => MAX_MASCOTAS - mascotasActivas.value.length)
-const puedeAgregar = computed(() => cuposDisponibles.value > 0)
+const limiteAlcanzado = computed(() => mascotasActivas.value.length >= MAX_MASCOTAS)
+
+function handleNuevaMascota() {
+  if (limiteAlcanzado.value) {
+    showLimitDialog.value = true
+  } else {
+    router.push('/mascotas/nueva')
+  }
+}
 
 onMounted(async () => {
   try {
@@ -30,18 +38,10 @@ onMounted(async () => {
 <template>
   <div>
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
-      <div>
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Mis Mascotas</h1>
-        <p class="text-sm text-base-content/50 mt-1">
-          {{ mascotasActivas.length }} de {{ MAX_MASCOTAS }} mascotas activas
-          <span v-if="puedeAgregar" class="text-primary"> · {{ cuposDisponibles }} cupo(s) disponible(s)</span>
-          <span v-else class="text-warning"> · Límite alcanzado</span>
-        </p>
-      </div>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Mis Mascotas</h1>
       <button
         class="btn btn-primary gap-2"
-        :disabled="!puedeAgregar"
-        @click="router.push('/mascotas/nueva')"
+        @click="handleNuevaMascota"
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -118,4 +118,25 @@ onMounted(async () => {
     </div>
 
   </div>
+
+  <dialog :class="{ modal: true, 'modal-open': showLimitDialog }" v-if="showLimitDialog">
+    <div class="modal-box bg-[#1a1a2e] w-full max-w-sm sm:w-96">
+      <h3 class="font-bold text-lg text-[#FFFFE3] mb-3 flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-warning" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+        </svg>
+        Límite de mascotas alcanzado
+      </h3>
+      <p class="text-sm text-base-content/70 mb-5">
+        Has alcanzado el límite de <strong>{{ MAX_MASCOTAS }} mascotas</strong> registradas.
+        Si deseas agregar otra mascota, por favor acércate a <strong>recepción</strong> para que puedan assistirte con el registro.
+      </p>
+      <div class="modal-action pt-2">
+        <button class="btn btn-primary btn-sm" @click="showLimitDialog = false">Entendido</button>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop" @click="showLimitDialog = false">
+      <button>close</button>
+    </form>
+  </dialog>
 </template>
