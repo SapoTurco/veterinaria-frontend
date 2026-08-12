@@ -50,10 +50,11 @@ onMounted(async () => {
         .sort((a: any, b: any) => `${a.fechaCita}T${a.horaCita || '00:00'}`.localeCompare(`${b.fechaCita}T${b.horaCita || '00:00'}`))
         .slice(0, 3)
     } else {
+      const esProfesional = authStore.hasAnyRole('VETERINARIO', 'ESTILISTA')
       const [clientes, mascotas, citas, facturas] = await Promise.allSettled([
         authStore.hasModule('CLIENTES') ? clientesApi.getAll() : Promise.resolve({ data: [] }),
         authStore.hasModule('MASCOTAS') ? mascotasApi.getAll() : Promise.resolve({ data: [] }),
-        authStore.hasModule('CITAS') ? citasApi.getAll() : Promise.resolve({ data: [] }),
+        authStore.hasModule('CITAS') ? (esProfesional ? citasApi.getMisCitas() : citasApi.getAll()) : Promise.resolve({ data: [] }),
         authStore.hasModule('FACTURACION') ? facturasApi.getAll() : Promise.resolve({ data: [] }),
       ])
       const clientesData = clientes.status === 'fulfilled' ? clientes.value : { data: [] }
