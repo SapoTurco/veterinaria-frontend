@@ -43,6 +43,4 @@ __screenshots__/
 # Vite
 *.timestamp-*-*.mjs
 
-# Other folders
-backend/
-frontendveterinaria/
+
