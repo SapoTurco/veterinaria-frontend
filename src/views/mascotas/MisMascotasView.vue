@@ -129,7 +129,7 @@ onMounted(async () => {
       </h3>
       <p class="text-sm text-base-content/70 mb-5">
         Has alcanzado el límite de <strong>{{ MAX_MASCOTAS }} mascotas</strong> registradas.
-        Si deseas agregar otra mascota, por favor acércate a <strong>recepción</strong> para que puedan assistirte con el registro.
+        Si deseas agregar otra mascota, por favor acércate a <strong>recepción</strong> para que puedan asistirte con el registro.
       </p>
       <div class="modal-action pt-2">
         <button class="btn btn-primary btn-sm" @click="showLimitDialog = false">Entendido</button>
