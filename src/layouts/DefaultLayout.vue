@@ -235,7 +235,7 @@ function navigateTo(path: string) {
         <!-- Header -->
         <header class="header-glass h-14 sm:h-16 flex items-center justify-between px-4 sm:px-6 relative z-30">
           <div class="flex items-center gap-3">
-            <button class="hamburger-btn lg:hidden" @click="sidebarOpen = true">
+            <button class="hamburger-btn lg:!hidden" @click="sidebarOpen = true">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
