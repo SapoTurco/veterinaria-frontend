@@ -222,8 +222,8 @@ onMounted(async () => {
                   <p class="text-xs text-[#CBCBCB]/60 truncate">{{ cita.nombreServicio }}</p>
                 </div>
                 <div class="text-right shrink-0">
-                  <p class="text-xs font-medium text-[#FFFFE3]">{{ formatCitaFecha(cita.fechaCita) }}</p>
-                  <p class="text-xs text-[#CBCBCB]/60">{{ formatHora(cita.horaCita) }}</p>
+                  <p class="text-xs font-medium text-[#FFFFE3]">{{ formatCitaFecha(cita.fechaCita || '') }}</p>
+                  <p class="text-xs text-[#CBCBCB]/60">{{ formatHora(cita.horaCita || '') }}</p>
                 </div>
               </router-link>
             </div>
@@ -331,8 +331,8 @@ onMounted(async () => {
                   <p class="text-xs text-[#CBCBCB]/60 truncate">{{ cita.nombreServicio }}</p>
                 </div>
                 <div class="text-right shrink-0">
-                  <p class="text-xs font-medium text-[#FFFFE3]">{{ formatCitaFecha(cita.fechaCita) }}</p>
-                  <p class="text-xs text-[#CBCBCB]/60">{{ formatHora(cita.horaCita) }}</p>
+                  <p class="text-xs font-medium text-[#FFFFE3]">{{ formatCitaFecha(cita.fechaCita || '') }}</p>
+                  <p class="text-xs text-[#CBCBCB]/60">{{ formatHora(cita.horaCita || '') }}</p>
                 </div>
               </router-link>
             </div>
