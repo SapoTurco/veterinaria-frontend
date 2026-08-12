@@ -109,6 +109,10 @@ function openEditModal() {
 
 async function handleSaveProfile() {
   modalError.value = ''
+  if (isCliente.value && !editForm.value.telefono.trim()) {
+    modalError.value = 'El teléfono es obligatorio'
+    return
+  }
   const passwordsProvided =
     !!passwordForm.value.passwordActual || !!passwordForm.value.nuevaPassword || !!passwordForm.value.confirmPassword
 
@@ -372,7 +376,7 @@ async function handleSaveProfile() {
                 </div>
                 <div class="form-control">
                   <label class="label py-0"><span class="label-text font-medium text-sm">Teléfono</span></label>
-                  <input v-model="editForm.telefono" type="tel" class="input input-bordered input-sm w-full" :disabled="!isCliente" />
+                  <input v-model="editForm.telefono" type="tel" class="input input-bordered input-sm w-full" required :disabled="!isCliente" />
                 </div>
               </div>
               <div class="form-control">

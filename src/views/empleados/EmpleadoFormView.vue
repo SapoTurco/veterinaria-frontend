@@ -41,6 +41,7 @@ const formValid = computed(() =>
   form.value.numeroDocumento.trim() !== '' &&
   form.value.primerNombre.trim() !== '' &&
   form.value.primerApellido.trim() !== '' &&
+  form.value.telefono.trim() !== '' &&
   form.value.idCargo !== 0 &&
   form.value.fechaIngreso !== ''
 )
@@ -106,7 +107,7 @@ async function handleSubmit() {
       segundoNombre: form.value.segundoNombre || null,
       primerApellido: form.value.primerApellido,
       segundoApellido: form.value.segundoApellido || null,
-      telefono: form.value.telefono || null,
+      telefono: form.value.telefono.trim(),
       correo: form.value.correo || null,
       direccion: form.value.direccion || null,
       idCargo: form.value.idCargo,
@@ -217,7 +218,10 @@ async function handleSubmit() {
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Telefono</span></label>
-            <input v-model="form.telefono" type="tel" class="input input-bordered input-sm w-full" placeholder="Telefono" />
+            <input v-model="form.telefono" type="tel" class="input input-bordered input-sm w-full" placeholder="Telefono" required />
+            <label v-if="submitted && !form.telefono.trim()" class="label py-0">
+              <span class="label-text-alt text-error text-xs">Debes ingresar un teléfono</span>
+            </label>
           </div>
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Correo</span></label>

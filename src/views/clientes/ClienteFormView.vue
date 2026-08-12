@@ -33,7 +33,8 @@ function normalizeCorreo() {
 const formValid = computed(() =>
   form.value.numeroDocumento.trim() !== '' &&
   form.value.primerNombre.trim() !== '' &&
-  form.value.primerApellido.trim() !== ''
+  form.value.primerApellido.trim() !== '' &&
+  form.value.telefono.trim() !== ''
 )
 
 const usuarioValid = computed(() =>
@@ -187,7 +188,10 @@ async function handleSubmit() {
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Telefono</span></label>
-            <input v-model="form.telefono" type="tel" class="input input-bordered input-sm w-full" placeholder="Telefono" />
+            <input v-model="form.telefono" type="tel" class="input input-bordered input-sm w-full" placeholder="Telefono" required />
+            <label v-if="submitted && !form.telefono.trim()" class="label py-0">
+              <span class="label-text-alt text-error text-xs">Debes ingresar un teléfono</span>
+            </label>
           </div>
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Correo</span></label>

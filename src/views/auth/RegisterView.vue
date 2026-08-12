@@ -44,6 +44,10 @@ function validateStep(stepNum: number): boolean {
       stepErrors.value[1] = 'El primer apellido es obligatorio'
       return false
     }
+    if (!form.value.telefono.trim()) {
+      stepErrors.value[1] = 'El teléfono es obligatorio'
+      return false
+    }
     return true
   }
   if (stepNum === 2) {
@@ -88,7 +92,7 @@ async function handleRegister() {
     }
     if (form.value.segundoNombre) data.segundoNombre = form.value.segundoNombre
     if (form.value.segundoApellido) data.segundoApellido = form.value.segundoApellido
-    if (form.value.telefono) data.telefono = form.value.telefono
+    data.telefono = form.value.telefono.trim()
     if (form.value.direccion) data.direccion = form.value.direccion
     await authStore.register(data)
     router.push('/login')
@@ -169,7 +173,7 @@ async function handleRegister() {
 
           <div class="form-control">
             <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Teléfono</span></label>
-            <input v-model="form.telefono" type="tel" placeholder="Número de telefono" class="input input-bordered input-sm w-full input-animated" />
+            <input v-model="form.telefono" type="tel" placeholder="Número de telefono" class="input input-bordered input-sm w-full input-animated" required />
           </div>
 
           <div class="form-control">

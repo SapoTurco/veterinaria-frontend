@@ -22,7 +22,7 @@ export interface CrearClienteRequest {
   segundoNombre?: string
   primerApellido: string
   segundoApellido?: string
-  telefono?: string
+  telefono: string
   correo?: string
   direccion?: string
 }
@@ -34,7 +34,7 @@ export interface ActualizarClienteRequest {
   segundoNombre?: string
   primerApellido: string
   segundoApellido?: string
-  telefono?: string
+  telefono: string
   correo?: string
   direccion?: string
 }

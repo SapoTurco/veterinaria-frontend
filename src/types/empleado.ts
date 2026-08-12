@@ -28,7 +28,7 @@ export interface CrearEmpleadoRequest {
   segundoNombre?: string
   primerApellido: string
   segundoApellido?: string
-  telefono?: string
+  telefono: string
   correo?: string
   direccion?: string
   fechaIngreso: string
