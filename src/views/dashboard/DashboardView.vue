@@ -5,7 +5,6 @@ import { clientesApi } from '@/api/clientesApi'
 import { mascotasApi } from '@/api/mascotasApi'
 import { citasApi } from '@/api/citasApi'
 import { facturasApi } from '@/api/facturasApi'
-import { formatHora } from '@/types/cita'
 
 const authStore = useAuthStore()
 
@@ -17,13 +16,6 @@ const stats = ref({
 })
 const loading = ref(true)
 const error = ref('')
-const proximasCitas = ref<any[]>([])
-
-function formatCitaFecha(fecha: string): string {
-  if (!fecha) return ''
-  const [y, m, d] = fecha.split('-')
-  return `${parseInt(d)}/${parseInt(m)}`
-}
 
 onMounted(async () => {
   try {
@@ -42,11 +34,6 @@ onMounted(async () => {
         citas: Array.isArray(citasData.data) ? citasData.data.filter((c: any) => c.estadoCita === 'PENDIENTE' || c.estadoCita === 'CONFIRMADA').length : 0,
         facturas: Array.isArray(facturasData.data) ? facturasData.data.length : 0,
       }
-      const todasCitas = Array.isArray(citasData.data) ? citasData.data : []
-      proximasCitas.value = todasCitas
-        .filter((c: any) => c.estadoCita === 'PENDIENTE' || c.estadoCita === 'CONFIRMADA')
-        .sort((a: any, b: any) => `${a.fechaCita}T${a.horaCita || '00:00'}`.localeCompare(`${b.fechaCita}T${b.horaCita || '00:00'}`))
-        .slice(0, 3)
     } else {
       const [clientes, mascotas, citas, facturas] = await Promise.allSettled([
         authStore.hasModule('CLIENTES') ? clientesApi.getAll() : Promise.resolve({ data: [] }),
@@ -64,11 +51,6 @@ onMounted(async () => {
         citas: Array.isArray(citasData.data) ? citasData.data.filter((c: any) => c.estadoCita === 'PENDIENTE' || c.estadoCita === 'CONFIRMADA').length : 0,
         facturas: Array.isArray(facturasData.data) ? facturasData.data.length : 0,
       }
-      const todasCitas = Array.isArray(citasData.data) ? citasData.data : []
-      proximasCitas.value = todasCitas
-        .filter((c: any) => c.estadoCita === 'PENDIENTE' || c.estadoCita === 'CONFIRMADA')
-        .sort((a: any, b: any) => `${a.fechaCita}T${a.horaCita || '00:00'}`.localeCompare(`${b.fechaCita}T${b.horaCita || '00:00'}`))
-        .slice(0, 3)
     }
   } catch (e: any) {
     error.value = e.response?.data?.message || 'No se pudieron cargar los datos'
@@ -194,38 +176,20 @@ onMounted(async () => {
             </div>
           </div>
 
-          <div class="dashboard-card rounded-2xl p-6 flex flex-col">
-            <h2 class="text-lg font-bold text-[#FFFFE3] mb-4">Próximas Citas</h2>
-            <div v-if="proximasCitas.length === 0" class="flex-1 flex items-center justify-center">
-              <div class="text-center py-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-[#CBCBCB]/20 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <p class="text-[#CBCBCB]/40 text-sm">No hay citas pendientes</p>
+          <div class="dashboard-card rounded-2xl p-6">
+            <h2 class="text-lg font-bold text-[#FFFFE3] mb-4">Sobre VetClinic</h2>
+            <div class="space-y-3 mt-4 text-sm">
+              <div class="py-2 border-b border-white/5">
+                <span class="text-[#CBCBCB]/80 leading-relaxed block">Sistema de gestion integral para clinicas veterinarias. Administra mascotas, clientes, citas, servicios y facturacion en un solo lugar.</span>
               </div>
-            </div>
-            <div v-else class="flex-1 flex flex-col gap-3">
-              <router-link
-                v-for="cita in proximasCitas"
-                :key="cita.idCita"
-                :to="`/citas/${cita.idCita}`"
-                class="cita-item rounded-xl p-4 flex items-center gap-3 cursor-pointer"
-              >
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-                     :class="cita.estadoCita === 'PENDIENTE' ? 'bg-[#E8650A]/20 text-[#E8650A]' : 'bg-[#1A8A8E]/20 text-[#1A8A8E]'">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <div class="flex-1 min-w-0">
-                  <p class="text-sm font-semibold text-[#FFFFE3] truncate">{{ cita.nombreMascota }}</p>
-                  <p class="text-xs text-[#CBCBCB]/60 truncate">{{ cita.nombreServicio }}</p>
-                </div>
-                <div class="text-right shrink-0">
-                  <p class="text-xs font-medium text-[#FFFFE3]">{{ formatCitaFecha(cita.fechaCita) }}</p>
-                  <p class="text-xs text-[#CBCBCB]/60">{{ formatHora(cita.horaCita) }}</p>
-                </div>
-              </router-link>
+              <div class="flex justify-between items-center py-2 border-b border-white/5">
+                <span class="text-[#CBCBCB]/60">Mascotas registradas:</span>
+                <span class="font-medium text-[#FFFFE3] bg-white/5 px-3 py-1 rounded-full text-xs">{{ stats.mascotas }}</span>
+              </div>
+              <div class="flex justify-between items-center py-2">
+                <span class="text-[#CBCBCB]/60">Citas este mes:</span>
+                <span class="font-medium text-[#FFFFE3] bg-white/5 px-3 py-1 rounded-full text-xs">{{ stats.citas }}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -344,17 +308,5 @@ onMounted(async () => {
   background: rgba(13, 115, 119, 0.3);
   border-color: rgba(13, 115, 119, 0.4);
   transform: translateY(-1px);
-}
-
-.cita-item {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(203, 203, 203, 0.06);
-  transition: all 0.2s ease;
-}
-
-.cita-item:hover {
-  background: rgba(13, 115, 119, 0.15);
-  border-color: rgba(13, 115, 119, 0.3);
-  transform: translateX(2px);
 }
 </style>
