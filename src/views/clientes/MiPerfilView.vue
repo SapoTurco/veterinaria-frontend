@@ -17,6 +17,7 @@ const loading = ref(true)
 const error = ref('')
 const success = ref('')
 const saving = ref(false)
+const modalError = ref('')
 
 const showEditModal = ref(false)
 
@@ -88,6 +89,7 @@ onMounted(async () => {
 })
 
 function openEditModal() {
+  modalError.value = ''
   const p = perfil.value
   if (p) {
     editForm.value = {
@@ -106,27 +108,27 @@ function openEditModal() {
 }
 
 async function handleSaveProfile() {
-  error.value = ''
+  modalError.value = ''
   const passwordsProvided =
     !!passwordForm.value.passwordActual || !!passwordForm.value.nuevaPassword || !!passwordForm.value.confirmPassword
 
   if (passwordsProvided) {
     if (!passwordForm.value.passwordActual.trim()) {
-      error.value = 'Ingresa tu contraseña actual para poder cambiarla'
+      modalError.value = 'Ingresa tu contraseña actual para poder cambiarla'
       return
     }
     if (passwordForm.value.nuevaPassword.length < 8) {
-      error.value = 'La nueva contraseña debe tener al menos 8 caracteres'
+      modalError.value = 'La nueva contraseña debe tener al menos 8 caracteres'
       return
     }
     if (passwordForm.value.nuevaPassword !== passwordForm.value.confirmPassword) {
-      error.value = 'Las contraseñas no coinciden'
+      modalError.value = 'Las contraseñas no coinciden'
       return
     }
   }
 
   saving.value = true
-  error.value = ''
+  modalError.value = ''
   try {
     if (isCliente.value) {
       await clientesApi.updateProfile(editForm.value)
@@ -147,7 +149,7 @@ async function handleSaveProfile() {
       : 'Contraseña actualizada correctamente'
     setTimeout(() => success.value = '', 3000)
   } catch (e: any) {
-    error.value = e.response?.data?.message || 'Error al guardar los cambios'
+    modalError.value = e.response?.data?.message || 'Error al guardar los cambios'
   } finally {
     saving.value = false
   }
@@ -325,6 +327,11 @@ async function handleSaveProfile() {
           <button class="btn btn-ghost btn-sm btn-circle" @click="showEditModal = false">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
           </button>
+        </div>
+
+        <div v-if="modalError" class="alert alert-error mb-4">
+          <span>{{ modalError }}</span>
+          <button type="button" class="btn btn-ghost btn-xs" @click="modalError = ''">X</button>
         </div>
 
         <form @submit.prevent="handleSaveProfile" class="space-y-4">
