@@ -375,7 +375,7 @@ async function handleSaveProfile() {
                   <input v-model="editForm.correo" type="email" class="input input-bordered input-sm w-full" :disabled="!isCliente" />
                 </div>
                 <div class="form-control">
-                  <label class="label py-0"><span class="label-text font-medium text-sm">Teléfono</span></label>
+                  <label class="label py-0"><span class="label-text font-medium text-sm">Teléfono *</span></label>
                   <input v-model="editForm.telefono" type="tel" class="input input-bordered input-sm w-full" required :disabled="!isCliente" />
                 </div>
               </div>

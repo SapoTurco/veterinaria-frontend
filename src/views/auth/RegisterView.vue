@@ -172,7 +172,7 @@ async function handleRegister() {
           </div>
 
           <div class="form-control">
-            <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Teléfono</span></label>
+            <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Teléfono *</span></label>
             <input v-model="form.telefono" type="tel" placeholder="Número de telefono" class="input input-bordered input-sm w-full input-animated" required />
           </div>
 
