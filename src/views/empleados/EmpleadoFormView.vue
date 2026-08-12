@@ -28,6 +28,11 @@ const loading = ref(false)
 const error = ref('')
 const submitted = ref(false)
 
+const hoy = computed(() => {
+  const d = new Date()
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+})
+
 const formValid = computed(() =>
   form.value.numeroDocumento.trim() !== '' &&
   form.value.primerNombre.trim() !== '' &&
@@ -77,6 +82,12 @@ async function handleSubmit() {
   submitted.value = true
 
   if (!formValid.value || !credencialesValid.value) {
+    return
+  }
+
+  if (form.value.fechaIngreso && form.value.fechaIngreso < hoy.value) {
+    error.value = 'La fecha de ingreso no puede ser una fecha pasada'
+    loading.value = false
     return
   }
 
@@ -233,9 +244,18 @@ async function handleSubmit() {
           </div>
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Fecha ingreso *</span></label>
-            <input v-model="form.fechaIngreso" type="date" class="input input-bordered input-sm w-full" />
+            <input
+              v-model="form.fechaIngreso"
+              type="date"
+              class="input input-bordered input-sm w-full"
+              :min="hoy"
+              :style="{ colorScheme: 'dark' }"
+            />
             <label v-if="submitted && !form.fechaIngreso" class="label py-0">
               <span class="label-text-alt text-error text-xs">Debes ingresar la fecha de ingreso</span>
+            </label>
+            <label v-else-if="submitted && form.fechaIngreso && form.fechaIngreso < hoy" class="label py-0">
+              <span class="label-text-alt text-error text-xs">La fecha no puede ser pasada</span>
             </label>
           </div>
         </div>
