@@ -29,6 +29,7 @@ const resetError = ref('')
 const resetSuccess = ref('')
 const mostrarClave = ref(false)
 const showCrearCuentaDialog = ref(false)
+const cuentaEmail = ref('')
 const cuentaPassword = ref('')
 const cuentaMostrarClave = ref(false)
 const crearCuentaLoading = ref(false)
@@ -153,6 +154,7 @@ function formatFecha(fecha: string | null) {
 }
 
 function openCrearCuentaDialog() {
+  cuentaEmail.value = ''
   cuentaPassword.value = ''
   cuentaMostrarClave.value = false
   crearCuentaError.value = ''
@@ -162,19 +164,20 @@ function openCrearCuentaDialog() {
 }
 
 async function handleCrearCuenta() {
-  if (cuentaPassword.value.length < 8) {
-    crearCuentaError.value = 'La contraseña debe tener al menos 8 caracteres'
+  cuentaEmail.value = cuentaEmail.value.trim().toLowerCase()
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cuentaEmail.value)) {
+    crearCuentaError.value = 'Ingresa un correo electrónico válido para la cuenta'
     return
   }
-  if (!cliente.value?.correo) {
-    crearCuentaError.value = 'El cliente no tiene correo registrado. Edita el cliente primero.'
+  if (cuentaPassword.value.length < 8) {
+    crearCuentaError.value = 'La contraseña debe tener al menos 8 caracteres'
     return
   }
   try {
     crearCuentaLoading.value = true
     crearCuentaError.value = ''
     await clientesApi.crearUsuario(id, {
-      email: cliente.value.correo.trim().toLowerCase(),
+      email: cuentaEmail.value,
       password: cuentaPassword.value,
     })
     crearCuentaSuccess.value = 'Cuenta creada correctamente'
@@ -391,7 +394,7 @@ async function handleCrearCuenta() {
           Crear cuenta de acceso
         </h3>
         <p class="text-sm text-base-content/50 mb-5">
-          Este cliente no tiene cuenta. Define la contraseña para crear su cuenta de acceso.
+          Define el correo y la contraseña para crear la cuenta de acceso del cliente.
         </p>
 
         <div v-if="crearCuentaError" class="alert alert-error mb-4 py-2 text-sm">
@@ -406,6 +409,20 @@ async function handleCrearCuenta() {
         </div>
 
         <form @submit.prevent="handleCrearCuenta" class="space-y-4" @keydown.esc="showCrearCuentaDialog = false">
+          <div class="form-control">
+            <label class="label pb-1">
+              <span class="label-text text-xs uppercase tracking-wider text-base-content/50">Correo de la cuenta *</span>
+            </label>
+            <input
+              v-model="cuentaEmail"
+              type="text"
+              inputmode="email"
+              autocomplete="email"
+              class="input input-bordered w-full bg-[#2A2A2A] border-white/10 focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/30"
+              placeholder="correo@ejemplo.com"
+              @blur="cuentaEmail = cuentaEmail.trim().toLowerCase()"
+            />
+          </div>
           <div class="form-control">
             <label class="label pb-1">
               <span class="label-text text-xs uppercase tracking-wider text-base-content/50">Contraseña</span>
