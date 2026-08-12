@@ -28,6 +28,10 @@ const loading = ref(false)
 const error = ref('')
 const submitted = ref(false)
 
+function normalizeCorreo() {
+  form.value.correo = form.value.correo.trim().toLowerCase()
+}
+
 const hoy = computed(() => {
   const d = new Date()
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
@@ -79,6 +83,7 @@ onMounted(async () => {
 })
 
 async function handleSubmit() {
+  normalizeCorreo()
   submitted.value = true
 
   if (!formValid.value || !credencialesValid.value) {
@@ -216,7 +221,7 @@ async function handleSubmit() {
           </div>
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Correo</span></label>
-            <input v-model="form.correo" type="email" class="input input-bordered input-sm w-full" placeholder="Correo electronico" />
+            <input v-model="form.correo" type="email" class="input input-bordered input-sm w-full" placeholder="Correo electronico" @blur="normalizeCorreo" />
           </div>
         </div>
         <div class="form-control">

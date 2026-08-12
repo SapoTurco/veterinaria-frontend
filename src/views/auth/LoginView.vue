@@ -15,7 +15,12 @@ const error = ref('')
 const showPassword = ref(false)
 const focusedField = ref('')
 
+function normalizeCorreo() {
+  form.value.correo = form.value.correo.trim().toLowerCase()
+}
+
 async function handleLogin() {
+  normalizeCorreo()
   loading.value = true
   error.value = ''
   try {
@@ -61,7 +66,7 @@ async function handleLogin() {
             class="input input-bordered w-full pl-11 input-animated"
             required
             @focus="focusedField = 'user'"
-            @blur="focusedField = ''"
+            @blur="normalizeCorreo(); focusedField = ''"
           />
           <div class="absolute left-3 top-1/2 -translate-y-1/2 transition-colors duration-300"
                :class="focusedField === 'user' ? 'text-[#0D7377]' : 'text-[#9a9a9a]'">

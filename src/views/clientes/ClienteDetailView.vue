@@ -174,7 +174,7 @@ async function handleCrearCuenta() {
     crearCuentaLoading.value = true
     crearCuentaError.value = ''
     await clientesApi.crearUsuario(id, {
-      email: cliente.value.correo,
+      email: cliente.value.correo.trim().toLowerCase(),
       password: cuentaPassword.value,
     })
     crearCuentaSuccess.value = 'Cuenta creada correctamente'

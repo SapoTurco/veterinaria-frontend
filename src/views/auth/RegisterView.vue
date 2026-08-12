@@ -29,6 +29,10 @@ const focusedField = ref('')
 
 const stepErrors = ref<Record<number, string>>({})
 
+function normalizeEmail() {
+  form.value.email = form.value.email.trim().toLowerCase()
+}
+
 function validateStep(stepNum: number): boolean {
   stepErrors.value[stepNum] = ''
   if (stepNum === 1) {
@@ -65,6 +69,7 @@ function prevStep() {
 }
 
 async function handleRegister() {
+  normalizeEmail()
   if (form.value.password !== form.value.confirmPassword) {
     error.value = 'Las contraseñas no coinciden'
     return
@@ -211,7 +216,7 @@ async function handleRegister() {
           <div class="form-control">
             <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Correo electrónico *</span></label>
             <div class="relative">
-              <input v-model="form.email" type="email" placeholder="Correo electrónico" class="input input-bordered input-sm w-full pl-11 input-animated" required />
+              <input v-model="form.email" type="email" placeholder="Correo electrónico" class="input input-bordered input-sm w-full pl-11 input-animated" required @blur="normalizeEmail" />
               <div class="absolute left-3 top-1/2 -translate-y-1/2 text-[#9a9a9a]">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
