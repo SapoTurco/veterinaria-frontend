@@ -210,8 +210,17 @@ async function handleSubmit() {
             <input v-model="form.peso" type="number" step="0.1" min="0" class="input input-bordered input-sm w-full" placeholder="Ej: 5.2" />
           </div>
           <div class="form-control">
-            <label class="label py-0"><span class="label-text font-medium text-sm">Fecha nacimiento</span></label>
-            <input v-model="form.fechaNacimiento" type="date" class="input input-bordered input-sm w-full" :max="hoy" />
+            <label class="label py-0"><span class="label-text font-medium text-sm">Fecha nacimiento *</span></label>
+            <input
+              v-model="form.fechaNacimiento"
+              type="date"
+              class="input input-bordered input-sm w-full"
+              :max="hoy"
+              :style="{ colorScheme: 'dark' }"
+            />
+            <label v-if="submitted && form.fechaNacimiento && form.fechaNacimiento > hoy" class="label py-0">
+              <span class="label-text-alt text-error text-xs">La fecha no puede ser futura</span>
+            </label>
           </div>
         </div>
         <div class="form-control">
