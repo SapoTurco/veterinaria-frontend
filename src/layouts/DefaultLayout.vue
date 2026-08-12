@@ -44,7 +44,9 @@ async function handleLogout() {
               :class="$route.path === '/mis-mascotas' ? 'nav-link-active' : 'nav-link-inactive'"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7 .137 1.217 1.5 2 2.5 2s2-.5 3-.5 1.863.283 3 .5c1-.5 1.363-.783 1.5-2 .113-.994-1.177-6.53-4-7C8.423 2.678 6.5 3.782 6.5 5.172V7" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5.172C14 3.782 12.423 2.679 10.5 3c-2.823.47-4.113 6.006-4 7 .137 1.217 1.5 2 2.5 2s2-.5 3-.5 1.863.283 3 .5c1-.5 1.363-.783 1.5-2 .113-.994-1.177-6.53-4-7C12.423 2.678 10.5 3.782 10.5 5.172V7" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c-2.5 0-5 1.5-5 3v1h10v-1c0-1.5-2.5-3-5-3z" />
               </svg>
               Mis Mascotas
             </router-link>
@@ -94,7 +96,9 @@ async function handleLogout() {
               :class="$route.path.startsWith('/mascotas') ? 'nav-link-active' : 'nav-link-inactive'"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7 .137 1.217 1.5 2 2.5 2s2-.5 3-.5 1.863.283 3 .5c1-.5 1.363-.783 1.5-2 .113-.994-1.177-6.53-4-7C8.423 2.678 6.5 3.782 6.5 5.172V7" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5.172C14 3.782 12.423 2.679 10.5 3c-2.823.47-4.113 6.006-4 7 .137 1.217 1.5 2 2.5 2s2-.5 3-.5 1.863.283 3 .5c1-.5 1.363-.783 1.5-2 .113-.994-1.177-6.53-4-7C12.423 2.678 10.5 3.782 10.5 5.172V7" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c-2.5 0-5 1.5-5 3v1h10v-1c0-1.5-2.5-3-5-3z" />
               </svg>
               Mascotas
             </router-link>
@@ -145,8 +149,12 @@ async function handleLogout() {
               class="nav-link flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200"
               :class="$route.path.startsWith('/servicios') ? 'nav-link-active' : 'nav-link-inactive'"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M11.5 3.5c0-.83-.67-1.5-1.5-1.5S8.5 2.67 8.5 3.5 9.17 5 10 5s1.5-.67 1.5-1.5z"/>
+                <path d="M15.5 3.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5 1.5-.67 1.5-1.5z"/>
+                <path d="M7.5 6.5c0-.83-.67-1.5-1.5-1.5S4.5 5.67 4.5 6.5 5.17 8 6 8s1.5-.67 1.5-1.5z"/>
+                <path d="M19.5 6.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5 1.5-.67 1.5-1.5z"/>
+                <path d="M12 22c-3 0-5.5-1.5-5.5-4 0-2 1.5-3.5 3-4.5.7-.5 1.5-.8 2.5-.8s1.8.3 2.5.8c1.5 1 3 2.5 3 4.5 0 2.5-2.5 4-5.5 4z"/>
               </svg>
               Servicios
             </router-link>
